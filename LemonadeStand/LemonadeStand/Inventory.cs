@@ -8,5 +8,77 @@ namespace LemonadeStand
 {
     class Inventory
     {
+        int currentMoney;
+        int currentLemons;
+        int currentSugar;
+        int currentCups;
+        int currentIce;
+
+        public Inventory(int money, int lemons, int sugar, int cups, int ice)
+        {
+            currentMoney = money;
+            currentLemons = lemons;
+            currentSugar = sugar;
+            currentCups = cups;
+            currentIce = ice;
+        }
+
+        public void BuyIce(int pricePer, int numBought)
+        {
+            if ((pricePer * numBought) < currentMoney)
+            {
+                currentIce += numBought;
+                currentMoney -= (pricePer * numBought);
+            }
+            else
+            {
+                Console.WriteLine("You do not have enough money for that much ice.");
+            }
+        }
+
+        public void BuyLemons(int pricePer, int numBought)
+        {
+            if ((pricePer * numBought) < currentMoney)
+            {
+                currentLemons += numBought;
+                currentMoney -= (pricePer * numBought);
+            }
+            else
+            {
+                Console.WriteLine("You do not have enough money for that many lemons.");
+            }
+        }
+
+        public void BuyCups(int pricePer, int numBought)
+        {
+            if ((pricePer * numBought) < currentMoney)
+            {
+                currentCups += numBought;
+                currentMoney -= (pricePer * numBought);
+            }
+            else
+            {
+                Console.WriteLine("You do not have enough money for that many cups.");
+            }
+        }
+
+        public void BuySugar(int pricePer, int numBought)
+        {
+            if ((pricePer * numBought) < currentMoney)
+            {
+                currentSugar += numBought;
+                currentMoney -= (pricePer * numBought);
+            }
+            else
+            {
+                Console.WriteLine("You do not have enough money for that much sugar.");
+            }
+        }
+
+        public void MeltIce()
+        {
+            currentIce = 0;
+            Console.WriteLine("All of your remaining ice melted.");
+        }
     }
 }

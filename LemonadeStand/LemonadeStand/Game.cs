@@ -8,21 +8,14 @@ namespace LemonadeStand
 {
     class Game
     {
-        int currentMoney;
-        int currentLemons;
-        int currentSugar;
-        int currentCups;
-        int currentIce;
+        
         int totalDays;
         int currentDay;
+        Inventory inv;
 
         public Game()
         {
-            currentMoney = 2000;
-            currentLemons = 0;
-            currentSugar = 0;
-            currentCups = 0;
-            currentIce = 0;
+            inv = new Inventory(2000, 0, 0, 0, 0);
             totalDays = 0;
             currentDay = 1;
         }
@@ -30,6 +23,13 @@ namespace LemonadeStand
         public void StartGame()
         {            
             Console.WriteLine("Started game with " + totalDays + " days runtime.");
+
+            do
+            {
+                Console.WriteLine("Day " + currentDay + " of " + totalDays + " total days.");
+                currentDay++;
+            }
+            while (currentDay <= totalDays);
         }
 
         public void InitGame()
