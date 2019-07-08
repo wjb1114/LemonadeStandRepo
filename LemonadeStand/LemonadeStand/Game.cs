@@ -13,11 +13,13 @@ namespace LemonadeStand
         int currentDay;
         Inventory inv;
         Store store;
+        List<TrackedData> trackedData;
 
         public Game()
         {
             inv = new Inventory(2000, 0, 0, 0, 0);
             store = new Store();
+            trackedData = new List<TrackedData>();
             totalDays = 0;
             currentDay = 1;
         }
@@ -80,9 +82,7 @@ namespace LemonadeStand
             totalDays = numDays;
 
             StartGame();
-        }
-
-        
+        }        
 
         public void RunStand()
         {
