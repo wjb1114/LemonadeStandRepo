@@ -15,6 +15,10 @@ namespace LemonadeStand
         Store store;
         List<TrackedData> trackedDataList;
         TrackedData data;
+        int lemonsPerPitcher;
+        int sugarPerPitcher;
+        int icePerCup;
+        int pricePerCup;
 
         public Game()
         {
@@ -23,6 +27,10 @@ namespace LemonadeStand
             trackedDataList = new List<TrackedData>();
             totalDays = 0;
             currentDay = 1;
+            lemonsPerPitcher = 0;
+            sugarPerPitcher = 0;
+            icePerCup = 0;
+            pricePerCup = 0;
         }
 
         public void StartGame()
@@ -95,6 +103,7 @@ namespace LemonadeStand
 
         public void RunStand()
         {
+            
             // 8 hours, 60 minutes per hour
             // avg 100 customers on good day
             // approx 1 customer every 4 to 5 minutes
@@ -102,19 +111,19 @@ namespace LemonadeStand
             Random rand = new Random();
             Customer cust;
 
-            int j = 0;
-
             for (int i = 0; i < 480; i++)
             {
-                
                 if (rand.Next(1, 101) > 79)
                 {
-                    j++;
                     cust = new Customer(rand.Next(6, 10), rand.Next(1, 6), rand.Next(6, 10), rand.Next(1, 6), rand.Next(6, 10), rand.Next(1, 6), rand.Next(25, 101));
-                    Console.WriteLine(cust.GetCustomerName() + " is customer number " + j + ".");
-                    data.SpawnedCustomer();
+                    Console.WriteLine(cust.GetCustomerName());
                     data.AddCustomerToList(cust);
                 }
+                else
+                {
+                    Console.WriteLine();
+                }
+                System.Threading.Thread.Sleep(100);
             }
 
             Console.WriteLine(data.customerList.Count + " customers appeared today.");
@@ -124,11 +133,31 @@ namespace LemonadeStand
         {
             Console.WriteLine(data.moneySpent);
             trackedDataList.Add(data);
+            lemonsPerPitcher = 0;
+            sugarPerPitcher = 0;
+            icePerCup = 0;
+            pricePerCup = 0;
+            inv.MeltIce();
         }
 
         public void EndGame()
         {
 
+        }
+
+        public void SetRecipe()
+        {
+            Console.WriteLine("How many Lemons per Pitcher?");
+            lemonsPerPitcher = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("How much Sugar per Pitcher?");
+            sugarPerPitcher = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("How much Ice per Cup?");
+            icePerCup = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("How much will you charge per cup? Value is in cents.");
+            pricePerCup = Convert.ToInt32(Console.ReadLine());
         }
     }
 }

@@ -13,13 +13,13 @@ namespace LemonadeStand
         // number between 1 an 10 for each, corresponds directly with number of lemons/sugar/ice
         // ie 4 lemons, 3 sugar, 5 ice cubes = 4 sour, 3 sweet, 5 water
 
-        int maxSourThreshold;
-        int minSourThreshold;
-        int maxSweetThreshold;
-        int minSweetThreshold;
-        int maxWaterThreshold;
-        int minWaterThreshold;
-        int maxPriceThreshold;
+        public int maxSourThreshold;
+        public int minSourThreshold;
+        public int maxSweetThreshold;
+        public int minSweetThreshold;
+        public int maxWaterThreshold;
+        public int minWaterThreshold;
+        public int maxPriceThreshold;
 
         public Customer(int maxSour, int minSour, int maxSweet, int minSweet, int maxWater, int minWater, int maxPrice)
         {
