@@ -8,8 +8,8 @@ namespace LemonadeStand
 {
     class TrackedData
     {
-        int moneySpent;
-        int moneyEarned;
+        public int moneySpent;
+        public int moneyEarned;
         int customersAppeared;
         int customersBought;
         public TrackedData()
@@ -18,6 +18,26 @@ namespace LemonadeStand
             moneySpent = 0;
             customersAppeared = 0;
             customersBought = 0;
+        }
+
+        public void SpendMoney(int money)
+        {
+            moneySpent += money;
+        }
+
+        public void EarnMoney(int money)
+        {
+            moneyEarned += money;
+        }
+
+        public void SpawnedCustomer()
+        {
+            customersAppeared += 1;
+        }
+
+        public void CustomerPurchased()
+        {
+            customersBought += 1;
         }
     }
 }

@@ -23,12 +23,13 @@ namespace LemonadeStand
             currentIce = ice;
         }
 
-        public void BuyIce(int pricePer, int numBought)
+        public void BuyIce(int pricePer, int numBought, TrackedData data)
         {
             if ((pricePer * numBought) < currentMoney)
             {
                 currentIce += numBought;
                 currentMoney -= (pricePer * numBought);
+                data.moneySpent += (pricePer * numBought);
                 Console.WriteLine("Bought " +  numBought + " Ice for $" + (pricePer * numBought) + ".");
             }
             else
@@ -37,12 +38,13 @@ namespace LemonadeStand
             }
         }
 
-        public void BuyLemons(int pricePer, int numBought)
+        public void BuyLemons(int pricePer, int numBought, TrackedData data)
         {
             if ((pricePer * numBought) < currentMoney)
             {
                 currentLemons += numBought;
                 currentMoney -= (pricePer * numBought);
+                data.moneySpent += (pricePer * numBought);
                 Console.WriteLine("Bought " + numBought + " Lemons for $" + (pricePer * numBought) + ".");
             }
             else
@@ -51,12 +53,13 @@ namespace LemonadeStand
             }
         }
 
-        public void BuyCups(int pricePer, int numBought)
+        public void BuyCups(int pricePer, int numBought, TrackedData data)
         {
             if ((pricePer * numBought) < currentMoney)
             {
                 currentCups += numBought;
                 currentMoney -= (pricePer * numBought);
+                data.moneySpent += (pricePer * numBought);
                 Console.WriteLine("Bought " + numBought + " Cups for $" + (pricePer * numBought) + ".");
             }
             else
@@ -65,12 +68,13 @@ namespace LemonadeStand
             }
         }
 
-        public void BuySugar(int pricePer, int numBought)
+        public void BuySugar(int pricePer, int numBought, TrackedData data)
         {
             if ((pricePer * numBought) < currentMoney)
             {
                 currentSugar += numBought;
                 currentMoney -= (pricePer * numBought);
+                data.moneySpent += (pricePer * numBought);
                 Console.WriteLine("Bought " + numBought + " Sugar for $" + (pricePer * numBought) + ".");
             }
             else

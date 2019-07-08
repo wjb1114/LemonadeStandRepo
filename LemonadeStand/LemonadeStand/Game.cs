@@ -13,13 +13,14 @@ namespace LemonadeStand
         int currentDay;
         Inventory inv;
         Store store;
-        List<TrackedData> trackedData;
+        List<TrackedData> trackedDataList;
+        TrackedData data;
 
         public Game()
         {
             inv = new Inventory(2000, 0, 0, 0, 0);
             store = new Store();
-            trackedData = new List<TrackedData>();
+            trackedDataList = new List<TrackedData>();
             totalDays = 0;
             currentDay = 1;
         }
@@ -30,12 +31,14 @@ namespace LemonadeStand
 
             do
             {
-                store.StoreMenu(inv);
+                StartDay();
+                store.StoreMenu(inv, data);
                 RunStand();
                 EndDay();
                 currentDay++;
             }
             while (currentDay <= totalDays);
+            EndGame();
         }
 
         public void InitGame()
@@ -82,14 +85,28 @@ namespace LemonadeStand
             totalDays = numDays;
 
             StartGame();
-        }        
+        }
+        
+        public void StartDay()
+        {
+            store.CalculateNewPrices();
+            data = new TrackedData();
+        }
 
         public void RunStand()
         {
-
+            // 8 hours, 60 minutes per hour
+            // avg 100 customers on good day
+            // approx 1 customer every 4 to 5 minutes
         }
 
         public void EndDay()
+        {
+            Console.WriteLine(data.moneySpent);
+            trackedDataList.Add(data);
+        }
+
+        public void EndGame()
         {
 
         }

@@ -48,7 +48,7 @@ namespace LemonadeStand
             pricePerSugar += rand.Next(-1, 2);
             pricePerLemon += rand.Next(-1, 2);
         }
-        public void StoreMenu(Inventory inv)
+        public void StoreMenu(Inventory inv, TrackedData data)
         {
             string userInput = "";
             string numPurchaseStr = "";
@@ -104,19 +104,19 @@ namespace LemonadeStand
 
                     if (userInput.ToLower() == "lemons")
                     {
-                        inv.BuyLemons(GiveLemonPrice(), numPurchase);
+                        inv.BuyLemons(GiveLemonPrice(), numPurchase, data);
                     }
                     else if (userInput.ToLower() == "ice")
                     {
-                        inv.BuyIce(GiveIcePrice(), numPurchase);
+                        inv.BuyIce(GiveIcePrice(), numPurchase, data);
                     }
                     else if (userInput.ToLower() == "sugar")
                     {
-                        inv.BuySugar(GiveSugarPrice(), numPurchase);
+                        inv.BuySugar(GiveSugarPrice(), numPurchase, data);
                     }
                     else if (userInput.ToLower() == "cups")
                     {
-                        inv.BuyCups(GiveCupPrice(), numPurchase);
+                        inv.BuyCups(GiveCupPrice(), numPurchase, data);
                     }
                 }
                 else
