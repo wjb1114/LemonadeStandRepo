@@ -12,10 +12,12 @@ namespace LemonadeStand
         int totalDays;
         int currentDay;
         Inventory inv;
+        Store store;
 
         public Game()
         {
             inv = new Inventory(2000, 0, 0, 0, 0);
+            store = new Store();
             totalDays = 0;
             currentDay = 1;
         }
@@ -26,7 +28,9 @@ namespace LemonadeStand
 
             do
             {
-                Console.WriteLine("Day " + currentDay + " of " + totalDays + " total days.");
+                store.StoreMenu(inv);
+                RunStand();
+                EndDay();
                 currentDay++;
             }
             while (currentDay <= totalDays);
@@ -76,6 +80,18 @@ namespace LemonadeStand
             totalDays = numDays;
 
             StartGame();
+        }
+
+        
+
+        public void RunStand()
+        {
+
+        }
+
+        public void EndDay()
+        {
+
         }
     }
 }

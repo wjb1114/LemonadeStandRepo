@@ -8,11 +8,11 @@ namespace LemonadeStand
 {
     class Inventory
     {
-        int currentMoney;
-        int currentLemons;
-        int currentSugar;
-        int currentCups;
-        int currentIce;
+        public int currentMoney;
+        public int currentLemons;
+        public int currentSugar;
+        public int currentCups;
+        public int currentIce;
 
         public Inventory(int money, int lemons, int sugar, int cups, int ice)
         {
@@ -29,6 +29,7 @@ namespace LemonadeStand
             {
                 currentIce += numBought;
                 currentMoney -= (pricePer * numBought);
+                Console.WriteLine("Bought " +  numBought + " Ice for $" + (pricePer * numBought) + ".");
             }
             else
             {
@@ -42,6 +43,7 @@ namespace LemonadeStand
             {
                 currentLemons += numBought;
                 currentMoney -= (pricePer * numBought);
+                Console.WriteLine("Bought " + numBought + " Lemons for $" + (pricePer * numBought) + ".");
             }
             else
             {
@@ -55,6 +57,7 @@ namespace LemonadeStand
             {
                 currentCups += numBought;
                 currentMoney -= (pricePer * numBought);
+                Console.WriteLine("Bought " + numBought + " Cups for $" + (pricePer * numBought) + ".");
             }
             else
             {
@@ -68,6 +71,7 @@ namespace LemonadeStand
             {
                 currentSugar += numBought;
                 currentMoney -= (pricePer * numBought);
+                Console.WriteLine("Bought " + numBought + " Sugar for $" + (pricePer * numBought) + ".");
             }
             else
             {
