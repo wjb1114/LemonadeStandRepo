@@ -10,14 +10,14 @@ namespace LemonadeStand
     {
         public int moneySpent;
         public int moneyEarned;
-        int customersAppeared;
-        int customersBought;
+        public int customersBought;
+        public List<Customer> customerList;
         public TrackedData()
         {
             moneyEarned = 0;
             moneySpent = 0;
-            customersAppeared = 0;
             customersBought = 0;
+            customerList = new List<Customer>();
         }
 
         public void SpendMoney(int money)
@@ -30,14 +30,14 @@ namespace LemonadeStand
             moneyEarned += money;
         }
 
-        public void SpawnedCustomer()
-        {
-            customersAppeared += 1;
-        }
-
         public void CustomerPurchased()
         {
             customersBought += 1;
+        }
+
+        public void AddCustomerToList(Customer cust)
+        {
+            customerList.Add(cust);
         }
     }
 }

@@ -98,6 +98,26 @@ namespace LemonadeStand
             // 8 hours, 60 minutes per hour
             // avg 100 customers on good day
             // approx 1 customer every 4 to 5 minutes
+
+            Random rand = new Random();
+            Customer cust;
+
+            int j = 0;
+
+            for (int i = 0; i < 480; i++)
+            {
+                
+                if (rand.Next(1, 101) > 79)
+                {
+                    j++;
+                    cust = new Customer(rand.Next(6, 10), rand.Next(1, 6), rand.Next(6, 10), rand.Next(1, 6), rand.Next(6, 10), rand.Next(1, 6), rand.Next(25, 101));
+                    Console.WriteLine(cust.GetCustomerName() + " is customer number " + j + ".");
+                    data.SpawnedCustomer();
+                    data.AddCustomerToList(cust);
+                }
+            }
+
+            Console.WriteLine(data.customerList.Count + " customers appeared today.");
         }
 
         public void EndDay()
