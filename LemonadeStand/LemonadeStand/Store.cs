@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// SOLID Principle Single Responsibility
+// This class contains member variables for prices for each ingredient
+// The methods present in this class are exclusively used for modifying the above pricing and using the pricing to facilitate purchase of ingredients
+
 namespace LemonadeStand
 {
     class Store

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// For SOLID principles as outlined in the user stories, please see the Weather.cs file for Open/Closed, and see Store.cs for Single Responsiility
+
 namespace LemonadeStand
 {
     class Program

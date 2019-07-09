@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// SOLID Principle Open/Closed
+// This class contains basic information for the weather.
+// It's only methods are used for displaying the weather and displaying a forecast of the weather
+// These methods don't have a need to be extended for further use, but the provided member variables can be used to create additional forecasts or weather reports at once, if needed in the future
+
 namespace LemonadeStand
 {
     class Weather
