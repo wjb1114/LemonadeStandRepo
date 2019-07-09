@@ -360,7 +360,23 @@ namespace LemonadeStand
 
         public void EndGame()
         {
+            int totalCustomers = 0;
+            int totalSales = 0;
+            int totalMoneySpent = 0;
+            int totalMoneyEarned = 0;
 
+            for (int i = 0; i < trackedDataList.Count; i++)
+            {
+                totalCustomers += trackedDataList[i].customerList.Count;
+                totalSales += trackedDataList[i].customersBought;
+                totalMoneySpent += trackedDataList[i].moneySpent;
+                totalMoneyEarned += trackedDataList[i].moneyEarned;
+            }
+
+            Console.WriteLine("Total of " + totalCustomers + " customers appeared.");
+            Console.WriteLine("Total of " + totalSales + " customers bought lemonade.");
+            Console.WriteLine("Total of $" + totalMoneyEarned + " earned.");
+            Console.WriteLine("Total of $" + totalMoneySpent + " spent.");
         }
 
         public void SetRecipe()

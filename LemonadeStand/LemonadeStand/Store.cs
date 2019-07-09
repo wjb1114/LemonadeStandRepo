@@ -92,10 +92,10 @@ namespace LemonadeStand
             int numPurchase = 0;
             bool validNum = false;
 
-            Console.WriteLine("You have $" + inv.currentMoney + ", " + inv.currentCups + " cups, " + inv.currentIce + " ice, " + inv.currentLemons + " lemons, and " + inv.currentSugar + " sugar.");
-
             do
             {
+                Console.WriteLine("You have $" + inv.currentMoney + ", " + inv.currentCups + " cups, " + inv.currentIce + " ice, " + inv.currentLemons + " lemons, and " + inv.currentSugar + " sugar.");
+                Console.WriteLine("Cups are $" + pricePerCup + ", Ice is $" + pricePerIce + ", Lemons are $" + pricePerLemon + ", and Sugar is $" + pricePerSugar  + ".");
                 Console.WriteLine("What will you purchase? Enter \"lemons\", \"ice\", \"sugar\", or \"cups\". Enter \"exit\" to run your stand.");
                 userInput = Console.ReadLine();
 
