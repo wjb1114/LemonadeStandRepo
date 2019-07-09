@@ -35,8 +35,6 @@ namespace LemonadeStand
 
         public void StartGame()
         {            
-            Console.WriteLine("Started game with " + totalDays + " days runtime.");
-
             do
             {
                 StartDay();
@@ -57,7 +55,7 @@ namespace LemonadeStand
             int numDays = 0;
             do
             {
-                Console.WriteLine("How many days will you run your stand? If you are new to the game, it is recommended to start with 7 days.");
+                Console.WriteLine("How many days will you run your stand? You must play a minimum of 7 days. If you are new to the game, it is recommended to start with 7 days.");
                 numDaysStr = Console.ReadLine();
                 try
                 {
@@ -74,9 +72,9 @@ namespace LemonadeStand
                     Console.WriteLine("Please enter a smaller whole number.");
                     errorThrown = true;
                 }
-                if (numDays < 1 && errorThrown == false)
+                if (numDays < 7 && errorThrown == false)
                 {
-                    Console.WriteLine("Please enter a whole number greater than zero.");
+                    Console.WriteLine("Please enter a whole number greater than or equal to 7.");
                 }
                 else if (errorThrown == true)
                 {
@@ -85,8 +83,6 @@ namespace LemonadeStand
                 else
                 {
                     validNumber = true;
-                    Console.WriteLine("You will run your stand for " + numDays + " days.");
-                    Console.ReadKey();
                 }
             }
             while (validNumber == false);
@@ -99,15 +95,48 @@ namespace LemonadeStand
         {
             store.CalculateNewPrices();
             data = new TrackedData();
+            data.weatherToday.DisplayForecast();
+            Console.WriteLine("Press any key to shop for ingredients.");
+            Console.ReadKey();
         }
 
         public void RunStand()
         {
+            int inversePercent;
 
             // 8 hours, 60 minutes per hour
             // avg 100 customers on good day
             // approx 1 customer every 4 to 5 minutes
             SetRecipe();
+
+            data.weatherToday.DisplayWeather();
+            Console.WriteLine("Press any key to begin the day.");
+            Console.ReadKey();
+
+            if(data.weatherToday.weatherType == "sunny")
+            {
+                inversePercent = 74;
+            }
+            else if (data.weatherToday.weatherType == "partly cloudy")
+            {
+                inversePercent = 78;
+            }
+            else if (data.weatherToday.weatherType == "overcast")
+            {
+                inversePercent = 81;
+            }
+            else if (data.weatherToday.weatherType == "foggy")
+            {
+                inversePercent = 85;
+            }
+            else if (data.weatherToday.weatherType == "rainy")
+            {
+                inversePercent = 89;
+            }
+            else
+            {
+                inversePercent = 79;
+            }
 
             Random rand = new Random();
             Customer cust;
@@ -125,7 +154,7 @@ namespace LemonadeStand
                     break;
                 }
 
-                if (rand.Next(1, 101) > 79)
+                if (rand.Next(1, 101) > inversePercent)
                 {
                     int qualityCount = 0;
                     int minSour = rand.Next(1, 11);
@@ -136,6 +165,33 @@ namespace LemonadeStand
                     int maxWater = rand.Next(minWater, 11);
                     int maxPrice = rand.Next(25, 101);
                     cust = new Customer(maxSour, minSour, maxSweet, minSweet, maxWater, minWater, maxPrice);
+
+                    if (data.weatherToday.temperature < 77)
+                    {
+                        cust.minWaterThreshold--;
+                        cust.maxWaterThreshold--;
+                        if (cust.minWaterThreshold <= 0)
+                        {
+                            cust.minWaterThreshold++;
+                        }
+                        if (cust.maxWaterThreshold <= 0)
+                        {
+                            cust.maxWaterThreshold++;
+                        }
+                    }
+                    else if (data.weatherToday.temperature > 89)
+                    {
+                        cust.minWaterThreshold++;
+                        cust.maxWaterThreshold++;
+                        if (cust.minWaterThreshold >= 10)
+                        {
+                            cust.minWaterThreshold--;
+                        }
+                        if (cust.maxWaterThreshold >= 10)
+                        {
+                            cust.maxWaterThreshold--;
+                        }
+                    }
 
                     if (lemonsPerPitcher > cust.maxSourThreshold)
                     {
@@ -347,6 +403,8 @@ namespace LemonadeStand
             Console.WriteLine(data.customersBought + " customers bought lemonade today.");
             Console.WriteLine("$" + data.moneyEarned + " earned today.");
             Console.WriteLine("$" + data.moneySpent + " spent today.");
+            Console.WriteLine("Press any key to end the day.");
+            Console.ReadKey();
         }
 
         public void EndDay()
@@ -356,11 +414,35 @@ namespace LemonadeStand
             sugarPerPitcher = 0;
             icePerCup = 0;
             pricePerCup = 0;
+
+            int totalCustomers = 0;
+            int totalSales = 0;
+            int totalMoneySpent = 0;
+            int totalMoneyEarned = 0;
+
+            for (int i = 0; i < trackedDataList.Count; i++)
+            {
+                totalCustomers += trackedDataList[i].customerList.Count;
+                totalSales += trackedDataList[i].customersBought;
+                totalMoneySpent += trackedDataList[i].moneySpent;
+                totalMoneyEarned += trackedDataList[i].moneyEarned;
+            }
+
+            Console.WriteLine("Cumulative totals:");
+            Console.WriteLine("----------");
+
+            Console.WriteLine("Total of " + totalCustomers + " customers appeared.");
+            Console.WriteLine("Total of " + totalSales + " customers bought lemonade.");
+            Console.WriteLine("Total of $" + totalMoneyEarned + " earned.");
+            Console.WriteLine("Total of $" + totalMoneySpent + " spent.");
+
             inv.MeltIce();
         }
 
         public void EndGame()
         {
+            Console.WriteLine("End of game totals:");
+            Console.WriteLine("----------");
             int totalCustomers = 0;
             int totalSales = 0;
             int totalMoneySpent = 0;

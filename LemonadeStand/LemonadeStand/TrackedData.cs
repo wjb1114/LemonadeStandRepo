@@ -12,12 +12,14 @@ namespace LemonadeStand
         public int moneyEarned;
         public int customersBought;
         public List<Customer> customerList;
+        public Weather weatherToday;
         public TrackedData()
         {
             moneyEarned = 0;
             moneySpent = 0;
             customersBought = 0;
             customerList = new List<Customer>();
+            weatherToday = new Weather();
         }
 
         public void SpendMoney(int money)

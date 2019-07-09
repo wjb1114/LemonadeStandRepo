@@ -105,11 +105,6 @@ namespace LemonadeStand
                     {
                         Console.WriteLine("Please make sure you have at least one of each item in your inventory.");
                     }
-                    else
-                    {
-                        Console.WriteLine("Exiting store. Press any key to start your stand for the day.");
-                        Console.ReadKey();
-                    }
                 }
                 else if (userInput.ToLower() == "lemons" || userInput.ToLower() == "ice" || userInput.ToLower() == "sugar" || userInput.ToLower() == "cups")
                 {
