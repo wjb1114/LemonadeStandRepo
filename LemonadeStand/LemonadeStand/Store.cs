@@ -15,10 +15,10 @@ namespace LemonadeStand
         Random rand;
         public Store()
         {
-            pricePerCup = 10;
+            pricePerCup = 3;
             pricePerIce = 1;
-            pricePerSugar = 12;
-            pricePerLemon = 15;
+            pricePerSugar = 9;
+            pricePerLemon = 8;
             rand = new Random();
         }
 
@@ -43,10 +43,47 @@ namespace LemonadeStand
 
         public void CalculateNewPrices()
         {
-            pricePerCup += rand.Next(-1, 2);
+            pricePerCup += rand.Next(-2, 3);
             pricePerIce += rand.Next(-1, 2);
-            pricePerSugar += rand.Next(-1, 2);
-            pricePerLemon += rand.Next(-1, 2);
+            pricePerSugar += rand.Next(-5, 6);
+            pricePerLemon += rand.Next(-4, 5);
+
+            if (pricePerCup <= 0)
+            {
+                pricePerCup = 1;
+            }
+            else if (pricePerCup > 50)
+            {
+                pricePerCup = 10;
+            }
+
+            if (pricePerIce <= 0)
+            {
+                pricePerIce = 1;
+            }
+            else if (pricePerIce > 15)
+            {
+                pricePerIce = 5;
+            }
+
+            if (pricePerSugar <= 0)
+            {
+                pricePerSugar = 1;
+            }
+            else if (pricePerSugar > 100)
+            {
+                pricePerSugar = 20;
+            }
+
+            if (pricePerLemon <= 0)
+            {
+                pricePerLemon = 1;
+            }
+            else if (pricePerCup > 100)
+            {
+                pricePerCup = 20;
+            }
+
         }
         public void StoreMenu(Inventory inv, TrackedData data)
         {
@@ -54,6 +91,8 @@ namespace LemonadeStand
             string numPurchaseStr = "";
             int numPurchase = 0;
             bool validNum = false;
+
+            Console.WriteLine("You have $" + inv.currentMoney + ", " + inv.currentCups + " cups, " + inv.currentIce + " ice, " + inv.currentLemons + " lemons, and " + inv.currentSugar + " sugar.");
 
             do
             {

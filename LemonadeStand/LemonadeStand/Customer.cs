@@ -20,6 +20,8 @@ namespace LemonadeStand
         public int maxWaterThreshold;
         public int minWaterThreshold;
         public int maxPriceThreshold;
+        public bool didPurchase;
+        public string feedbackStr;
 
         public Customer(int maxSour, int minSour, int maxSweet, int minSweet, int maxWater, int minWater, int maxPrice)
         {
@@ -31,6 +33,8 @@ namespace LemonadeStand
             maxWaterThreshold = maxWater;
             minWaterThreshold = minWater;
             maxPriceThreshold = maxPrice;
+            didPurchase = false;
+            feedbackStr = "";
         }
 
         public string GetCustomerName()
