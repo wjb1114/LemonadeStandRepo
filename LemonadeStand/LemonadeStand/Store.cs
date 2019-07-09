@@ -101,14 +101,22 @@ namespace LemonadeStand
 
                 if (userInput.ToLower() == "exit")
                 {
-                    Console.WriteLine("Exiting store. Press any key to start your stand for the day.");
-                    Console.ReadKey();
+                    if (inv.currentLemons < 1 || inv.currentIce < 1 || inv.currentSugar < 1 || inv.currentCups < 1)
+                    {
+                        Console.WriteLine("Please make sure you have at least one of each item in your inventory.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Exiting store. Press any key to start your stand for the day.");
+                        Console.ReadKey();
+                    }
                 }
                 else if (userInput.ToLower() == "lemons" || userInput.ToLower() == "ice" || userInput.ToLower() == "sugar" || userInput.ToLower() == "cups")
                 {
                     do
                     {
                         bool errorThrown = false;
+                        validNum = false;
                         Console.WriteLine("How much will you buy?");
                         numPurchaseStr = Console.ReadLine();
                         try
@@ -163,7 +171,7 @@ namespace LemonadeStand
                     Console.WriteLine("Unrecognized input.");
                 }
             }
-            while (userInput.ToLower() != "exit");
+            while (userInput.ToLower() != "exit" || inv.currentLemons < 1 || inv.currentIce < 1 || inv.currentSugar < 1 || inv.currentCups < 1);
 
         }
 

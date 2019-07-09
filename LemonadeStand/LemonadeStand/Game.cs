@@ -332,6 +332,7 @@ namespace LemonadeStand
                             cust.feedbackStr += ", ";
                         }
                         cust.feedbackStr += "Too Expensive";
+                        Console.WriteLine(cust.GetCustomerName() + " did not purchase. " + cust.feedbackStr);
                     }
                     data.AddCustomerToList(cust);
                 }
@@ -343,7 +344,7 @@ namespace LemonadeStand
             }
 
             Console.WriteLine(data.customerList.Count + " customers appeared today.");
-            Console.WriteLine(data.customersBought + " customers bought lemonade.");
+            Console.WriteLine(data.customersBought + " customers bought lemonade today.");
             Console.WriteLine("$" + data.moneyEarned + " earned today.");
             Console.WriteLine("$" + data.moneySpent + " spent today.");
         }
@@ -381,17 +382,165 @@ namespace LemonadeStand
 
         public void SetRecipe()
         {
-            Console.WriteLine("How many Lemons per Pitcher?");
-            lemonsPerPitcher = Convert.ToInt32(Console.ReadLine());
+            string inputStr = "";
+            int inputInt = 0;
+            bool errorThrown = false;
+            bool validNumber = false;
+            do
+            {
+                Console.WriteLine("How many Lemons per pitcher?");
+                inputStr = Console.ReadLine();
+                try
+                {
+                    inputInt = System.Convert.ToInt32(inputStr);
+                }
+                catch (FormatException)
+                {
 
-            Console.WriteLine("How much Sugar per Pitcher?");
-            sugarPerPitcher = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Please enter a valid whole number.");
+                    errorThrown = true;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Please enter a smaller whole number.");
+                    errorThrown = true;
+                }
+                if (inputInt < 1 && errorThrown == false)
+                {
+                    Console.WriteLine("Please enter a whole number greater than zero.");
+                }
+                else if (errorThrown == true)
+                {
+                    errorThrown = false;
+                }
+                else
+                {
+                    validNumber = true;
+                }
+            }
+            while (validNumber == false);
+            lemonsPerPitcher = inputInt;
 
-            Console.WriteLine("How much Ice per Cup?");
-            icePerCup = Convert.ToInt32(Console.ReadLine());
+            inputStr = "";
+            inputInt = 0;
+            errorThrown = false;
+            validNumber = false;
 
-            Console.WriteLine("How much will you charge per cup? Value is in cents.");
-            pricePerCup = Convert.ToInt32(Console.ReadLine());
+
+            do
+            {
+                Console.WriteLine("How much Sugar per pitcher?");
+                inputStr = Console.ReadLine();
+                try
+                {
+                    inputInt = System.Convert.ToInt32(inputStr);
+                }
+                catch (FormatException)
+                {
+
+                    Console.WriteLine("Please enter a valid whole number.");
+                    errorThrown = true;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Please enter a smaller whole number.");
+                    errorThrown = true;
+                }
+                if (inputInt < 1 && errorThrown == false)
+                {
+                    Console.WriteLine("Please enter a whole number greater than zero.");
+                }
+                else if (errorThrown == true)
+                {
+                    errorThrown = false;
+                }
+                else
+                {
+                    validNumber = true;
+                }
+            }
+            while (validNumber == false);
+            sugarPerPitcher = inputInt;
+
+            inputStr = "";
+            inputInt = 0;
+            errorThrown = false;
+            validNumber = false;
+
+            do
+            {
+                Console.WriteLine("How much Ice per cup?");
+                inputStr = Console.ReadLine();
+                try
+                {
+                    inputInt = System.Convert.ToInt32(inputStr);
+                }
+                catch (FormatException)
+                {
+
+                    Console.WriteLine("Please enter a valid whole number.");
+                    errorThrown = true;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Please enter a smaller whole number.");
+                    errorThrown = true;
+                }
+                if (inputInt < 1 && errorThrown == false)
+                {
+                    Console.WriteLine("Please enter a whole number greater than zero.");
+                }
+                else if (errorThrown == true)
+                {
+                    errorThrown = false;
+                }
+                else
+                {
+                    validNumber = true;
+                }
+            }
+            while (validNumber == false);
+            icePerCup = inputInt;
+
+            inputStr = "";
+            inputInt = 0;
+            errorThrown = false;
+            validNumber = false;
+
+            do
+            {
+                Console.WriteLine("How much will you charge per cup? Enter value in cents.");
+                inputStr = Console.ReadLine();
+                try
+                {
+                    inputInt = System.Convert.ToInt32(inputStr);
+                }
+                catch (FormatException)
+                {
+
+                    Console.WriteLine("Please enter a valid whole number.");
+                    errorThrown = true;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Please enter a smaller whole number.");
+                    errorThrown = true;
+                }
+                if (inputInt < 1 && errorThrown == false)
+                {
+                    Console.WriteLine("Please enter a whole number greater than zero.");
+                }
+                else if (errorThrown == true)
+                {
+                    errorThrown = false;
+                }
+                else
+                {
+                    validNumber = true;
+                }
+            }
+            while (validNumber == false);
+            pricePerCup = inputInt;
         }
     }
 }

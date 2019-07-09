@@ -85,8 +85,11 @@ namespace LemonadeStand
 
         public void MeltIce()
         {
-            currentIce = 0;
-            Console.WriteLine("All of your remaining ice melted.");
+            if (currentIce > 0)
+            {
+                currentIce = 0;
+                Console.WriteLine("All of your remaining ice melted.");
+            }
         }
     }
 }
