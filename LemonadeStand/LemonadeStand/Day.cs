@@ -49,9 +49,9 @@ namespace LemonadeStand
                     Console.WriteLine("Please enter a smaller whole number.");
                     errorThrown = true;
                 }
-                if (inputInt < 1 && errorThrown == false)
+                if ((inputInt < 1 || inputInt > 10) && errorThrown == false)
                 {
-                    Console.WriteLine("Please enter a whole number greater than zero.");
+                    Console.WriteLine("Please enter a whole number greater than zero and less than 11.");
                 }
                 else if (errorThrown == true)
                 {
@@ -90,9 +90,9 @@ namespace LemonadeStand
                     Console.WriteLine("Please enter a smaller whole number.");
                     errorThrown = true;
                 }
-                if (inputInt < 1 && errorThrown == false)
+                if ((inputInt < 1 || inputInt > 10) && errorThrown == false)
                 {
-                    Console.WriteLine("Please enter a whole number greater than zero.");
+                    Console.WriteLine("Please enter a whole number greater than zero and less than 11.");
                 }
                 else if (errorThrown == true)
                 {
@@ -130,9 +130,9 @@ namespace LemonadeStand
                     Console.WriteLine("Please enter a smaller whole number.");
                     errorThrown = true;
                 }
-                if (inputInt < 1 && errorThrown == false)
+                if ((inputInt < 1 || inputInt > 10) && errorThrown == false)
                 {
-                    Console.WriteLine("Please enter a whole number greater than zero.");
+                    Console.WriteLine("Please enter a whole number greater than zero and less than 11.");
                 }
                 else if (errorThrown == true)
                 {

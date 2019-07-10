@@ -25,7 +25,7 @@ namespace LemonadeStand
 
         public void BuyIce(int pricePer, int numBought, TrackedData data)
         {
-            if ((pricePer * numBought) < currentMoney)
+            if ((pricePer * numBought) <= currentMoney)
             {
                 currentIce += numBought;
                 currentMoney -= (pricePer * numBought);
@@ -40,7 +40,7 @@ namespace LemonadeStand
 
         public void BuyLemons(int pricePer, int numBought, TrackedData data)
         {
-            if ((pricePer * numBought) < currentMoney)
+            if ((pricePer * numBought) <= currentMoney)
             {
                 currentLemons += numBought;
                 currentMoney -= (pricePer * numBought);
@@ -55,7 +55,7 @@ namespace LemonadeStand
 
         public void BuyCups(int pricePer, int numBought, TrackedData data)
         {
-            if ((pricePer * numBought) < currentMoney)
+            if ((pricePer * numBought) <= currentMoney)
             {
                 currentCups += numBought;
                 currentMoney -= (pricePer * numBought);
@@ -70,7 +70,7 @@ namespace LemonadeStand
 
         public void BuySugar(int pricePer, int numBought, TrackedData data)
         {
-            if ((pricePer * numBought) < currentMoney)
+            if ((pricePer * numBought) <= currentMoney)
             {
                 currentSugar += numBought;
                 currentMoney -= (pricePer * numBought);

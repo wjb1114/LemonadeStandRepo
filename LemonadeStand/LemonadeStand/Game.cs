@@ -26,17 +26,23 @@ namespace LemonadeStand
         }
 
         public void StartGame()
-        {            
+        {
+            bool notBankrupt;
             do
             {
                 StartDay();
-                store.StoreMenu(inv, currentDay.data);
+                notBankrupt = store.StoreMenu(inv, currentDay.data);
+                if (notBankrupt == false)
+                {
+                    trackedDataList.Add(currentDay.data);
+                    break;
+                }
                 RunStand();
                 EndDay();
                 currentDayCount++;
             }
             while (currentDay.numDay <= totalDays);
-            EndGame();
+            EndGame(notBankrupt);
         }
 
         public int InitGame(string numDaysStr)
@@ -352,7 +358,7 @@ namespace LemonadeStand
             inv.MeltIce();
         }
 
-        public void EndGame()
+        public void EndGame(bool isNotBankrupt)
         {
             UserInterface.ChangeMode("End of Game Totals:");
             int totalCustomers = 0;
@@ -372,6 +378,14 @@ namespace LemonadeStand
             Console.WriteLine("Total of " + totalSales + " customers bought lemonade.");
             Console.WriteLine("Total of $" + totalMoneyEarned + " earned.");
             Console.WriteLine("Total of $" + totalMoneySpent + " spent.");
+            if (isNotBankrupt == true)
+            {
+                Console.WriteLine("You did not go bankrupt.");
+            }
+            else
+            {
+                Console.WriteLine("You went bankrupt and were forced to close down your stand.");
+            }
 
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();

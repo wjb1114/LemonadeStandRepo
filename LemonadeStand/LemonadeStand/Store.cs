@@ -89,7 +89,7 @@ namespace LemonadeStand
             }
 
         }
-        public void StoreMenu(Inventory inv, TrackedData data)
+        public bool StoreMenu(Inventory inv, TrackedData data)
         {
             UserInterface.ChangeMode("Store");
             string userInput = "";
@@ -99,82 +99,91 @@ namespace LemonadeStand
 
             do
             {
-                Console.WriteLine("You have $" + inv.currentMoney + ", " + inv.currentCups + " cups, " + inv.currentIce + " ice, " + inv.currentLemons + " lemons, and " + inv.currentSugar + " sugar.");
-                Console.WriteLine("Cups are $" + pricePerCup + ", Ice is $" + pricePerIce + ", Lemons are $" + pricePerLemon + ", and Sugar is $" + pricePerSugar  + ".");
-                Console.WriteLine("What will you purchase? Enter \"lemons\", \"ice\", \"sugar\", or \"cups\". Enter \"exit\" to run your stand.");
-                userInput = Console.ReadLine();
-                UserInterface.ChangeMode("Store");
-
-                if (userInput.ToLower() == "exit")
+                if ((inv.currentMoney < pricePerIce && inv.currentIce < 1) || (inv.currentMoney < pricePerSugar && inv.currentSugar < 1) || (inv.currentMoney < pricePerLemon && inv.currentLemons < 1) || (inv.currentMoney < pricePerCup && inv.currentCups < 1))
                 {
-                    if (inv.currentLemons < 1 || inv.currentIce < 1 || inv.currentSugar < 1 || inv.currentCups < 1)
-                    {
-                        Console.WriteLine("Please make sure you have at least one of each item in your inventory.");
-                    }
-                }
-                else if (userInput.ToLower() == "lemons" || userInput.ToLower() == "ice" || userInput.ToLower() == "sugar" || userInput.ToLower() == "cups")
-                {
-                    do
-                    {
-                        bool errorThrown = false;
-                        validNum = false;
-                        Console.WriteLine("How much will you buy?");
-                        numPurchaseStr = Console.ReadLine();
-                        UserInterface.ChangeMode("Store");
-                        try
-                        {
-                            numPurchase = System.Convert.ToInt32(numPurchaseStr);
-                        }
-                        catch (FormatException)
-                        {
-
-                            Console.WriteLine("Please enter a valid whole number.");
-                            errorThrown = true;
-                        }
-                        catch (OverflowException)
-                        {
-                            Console.WriteLine("Please enter a smaller whole number.");
-                            errorThrown = true;
-                        }
-                        if (numPurchase < 1 && errorThrown == false)
-                        {
-                            Console.WriteLine("Please enter a whole number greater than zero.");
-                        }
-                        else if (errorThrown == true)
-                        {
-                            errorThrown = false;
-                        }
-                        else
-                        {
-                            validNum = true;
-                        }
-                    }
-                    while (validNum == false);
-
-                    if (userInput.ToLower() == "lemons")
-                    {
-                        inv.BuyLemons(GiveLemonPrice(), numPurchase, data);
-                    }
-                    else if (userInput.ToLower() == "ice")
-                    {
-                        inv.BuyIce(GiveIcePrice(), numPurchase, data);
-                    }
-                    else if (userInput.ToLower() == "sugar")
-                    {
-                        inv.BuySugar(GiveSugarPrice(), numPurchase, data);
-                    }
-                    else if (userInput.ToLower() == "cups")
-                    {
-                        inv.BuyCups(GiveCupPrice(), numPurchase, data);
-                    }
+                    Console.WriteLine("You do not have enough money or inventory to continue. Game over.");
+                    Console.ReadKey();
+                    return false;
                 }
                 else
                 {
-                    Console.WriteLine("Unrecognized input.");
+                    Console.WriteLine("You have $" + inv.currentMoney + ", " + inv.currentCups + " cups, " + inv.currentIce + " ice, " + inv.currentLemons + " lemons, and " + inv.currentSugar + " sugar.");
+                    Console.WriteLine("Cups are $" + pricePerCup + ", Ice is $" + pricePerIce + ", Lemons are $" + pricePerLemon + ", and Sugar is $" + pricePerSugar + ".");
+                    Console.WriteLine("What will you purchase? Enter \"lemons\", \"ice\", \"sugar\", or \"cups\". Enter \"exit\" to run your stand.");
+                    userInput = Console.ReadLine();
+                    UserInterface.ChangeMode("Store");
+
+                    if (userInput.ToLower() == "exit")
+                    {
+                        if (inv.currentLemons < 1 || inv.currentIce < 1 || inv.currentSugar < 1 || inv.currentCups < 1)
+                        {
+                            Console.WriteLine("Please make sure you have at least one of each item in your inventory.");
+                        }
+                    }
+                    else if (userInput.ToLower() == "lemons" || userInput.ToLower() == "ice" || userInput.ToLower() == "sugar" || userInput.ToLower() == "cups")
+                    {
+                        do
+                        {
+                            bool errorThrown = false;
+                            validNum = false;
+                            Console.WriteLine("How much will you buy?");
+                            numPurchaseStr = Console.ReadLine();
+                            UserInterface.ChangeMode("Store");
+                            try
+                            {
+                                numPurchase = System.Convert.ToInt32(numPurchaseStr);
+                            }
+                            catch (FormatException)
+                            {
+
+                                Console.WriteLine("Please enter a valid whole number.");
+                                errorThrown = true;
+                            }
+                            catch (OverflowException)
+                            {
+                                Console.WriteLine("Please enter a smaller whole number.");
+                                errorThrown = true;
+                            }
+                            if (numPurchase < 1 && errorThrown == false)
+                            {
+                                Console.WriteLine("Please enter a whole number greater than zero.");
+                            }
+                            else if (errorThrown == true)
+                            {
+                                errorThrown = false;
+                            }
+                            else
+                            {
+                                validNum = true;
+                            }
+                        }
+                        while (validNum == false);
+
+                        if (userInput.ToLower() == "lemons")
+                        {
+                            inv.BuyLemons(GiveLemonPrice(), numPurchase, data);
+                        }
+                        else if (userInput.ToLower() == "ice")
+                        {
+                            inv.BuyIce(GiveIcePrice(), numPurchase, data);
+                        }
+                        else if (userInput.ToLower() == "sugar")
+                        {
+                            inv.BuySugar(GiveSugarPrice(), numPurchase, data);
+                        }
+                        else if (userInput.ToLower() == "cups")
+                        {
+                            inv.BuyCups(GiveCupPrice(), numPurchase, data);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unrecognized input.");
+                    }
                 }
             }
             while (userInput.ToLower() != "exit" || inv.currentLemons < 1 || inv.currentIce < 1 || inv.currentSugar < 1 || inv.currentCups < 1);
-
+            return true;
         }
 
     }
