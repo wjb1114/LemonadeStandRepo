@@ -20,23 +20,28 @@ namespace LemonadeStand
         public Weather()
         {
             Random rand = new Random();
-            weatherTypeSelector = rand.Next(1, 6);
+            weatherTypeSelector = rand.Next(1, 11);
             temperature = rand.Next(65, 96);
             switch(weatherTypeSelector)
             {
                 case 1:
+                case 2:
+                case 3:
+                case 4:
                     weatherType = "sunny";
                     break;
-                case 2:
+                case 5:
+                case 6:
                     weatherType = "partly cloudy";
                     break;
-                case 3:
+                case 7:
+                case 8:
                     weatherType = "overcast";
                     break;
-                case 4:
+                case 9:
                     weatherType = "foggy";
                     break;
-                case 5:
+                case 10:
                     weatherType = "rainy";
                     break;
             }
@@ -53,30 +58,35 @@ namespace LemonadeStand
                 forecastSelector = weatherTypeSelector;
             }
             string forecastType = "";
-            if (forecastSelector > 5)
+            if (forecastSelector > 10)
             {
-                forecastSelector -= 5;
+                forecastSelector = 10;
             }
             else if (forecastSelector < 1)
             {
-                forecastSelector += 5;
+                forecastSelector = 1;
             }
 
             switch (forecastSelector)
             {
                 case 1:
+                case 2:
+                case 3:
+                case 4:
                     forecastType = "sunny";
                     break;
-                case 2:
+                case 5:
+                case 6:
                     forecastType = "partly cloudy";
                     break;
-                case 3:
+                case 7:
+                case 8:
                     forecastType = "overcast";
                     break;
-                case 4:
+                case 9:
                     forecastType = "foggy";
                     break;
-                case 5:
+                case 10:
                     forecastType = "rainy";
                     break;
             }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
+    [Serializable]
     class TrackedData
     {
         public int moneySpent;
