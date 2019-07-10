@@ -33,11 +33,11 @@ namespace LemonadeStand
                 Console.WriteLine("Welcome to \"Lemonade Stand\"!");
                 Console.WriteLine("You start with $20 and need to get as much money as possible by running your own Lemonade Stand.");
                 UserInterface.LineBreak();
-                game = new Game();
+                game = new Game(playerNum);
                 gameReturnVal = game.InitGame(args[1]);
                 if (gameReturnVal == 0)
                 {
-                    SerializedData.SerializeData(game.trackedDataList, playerNum);
+                    SerializedData.SerializeDataEnd(game.trackedDataList, playerNum);
                 }
             }
             return gameReturnVal;

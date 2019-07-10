@@ -11,18 +11,20 @@ namespace LemonadeStand
         
         int totalDays;
         int currentDayCount;
+        int playerNum;
         Day currentDay;
         Inventory inv;
         Store store;
         public List<TrackedData> trackedDataList;
 
-        public Game()
+        public Game(int playerNumber)
         {
             inv = new Inventory(2000, 0, 0, 0, 0);
             store = new Store();
             trackedDataList = new List<TrackedData>();
             totalDays = 0;
             currentDayCount = 1;
+            playerNum = playerNumber;
         }
 
         public void StartGame()
@@ -333,6 +335,8 @@ namespace LemonadeStand
         {
             UserInterface.ChangeMode("Cumulative Totals:");
             trackedDataList.Add(currentDay.data);
+
+            SerializedData.SerializeDataDaily(currentDay.data, playerNum, currentDay.numDay);
 
             int totalCustomers = 0;
             int totalSales = 0;

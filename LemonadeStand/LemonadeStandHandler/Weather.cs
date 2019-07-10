@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 // It's only methods are used for displaying the weather and displaying a forecast of the weather
 // These methods don't have a need to be extended for further use, but the provided member variables can be used to create additional forecasts or weather reports at once, if needed in the future
 
-namespace LemonadeStand
+namespace LemonadeStandHandler
 {
     [Serializable]
     class Weather
