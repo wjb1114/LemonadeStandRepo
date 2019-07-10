@@ -27,6 +27,7 @@ namespace LemonadeStand
             }
             else
             {
+                int playerNum = System.Convert.ToInt32(args[0]);
                 Game game;
 
                 Console.WriteLine("Welcome to \"Lemonade Stand\"!");
@@ -34,6 +35,10 @@ namespace LemonadeStand
                 UserInterface.LineBreak();
                 game = new Game();
                 gameReturnVal = game.InitGame(args[1]);
+                if (gameReturnVal == 0)
+                {
+                    SerializedData.SerializeData(game.trackedDataList, playerNum);
+                }
             }
             return gameReturnVal;
         }
