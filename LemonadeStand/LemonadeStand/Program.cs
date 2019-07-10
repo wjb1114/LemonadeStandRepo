@@ -10,17 +10,20 @@ namespace LemonadeStand
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            if (args.Length < 1)
+            int gameReturnVal;
+            if (args.Length < 2)
             {
-                Console.WriteLine("Error: please define player number.");
+                Console.WriteLine("Error: please define player number and number of days to run.");
                 Console.ReadKey();
+                gameReturnVal = 1;
             }
-            else if (args.Length > 1)
+            else if (args.Length > 2)
             {
-                Console.WriteLine("Error: please run with only one argument.");
+                Console.WriteLine("Error: please run with only two arguments.");
                 Console.ReadKey();
+                gameReturnVal = 1;
             }
             else
             {
@@ -30,10 +33,9 @@ namespace LemonadeStand
                 Console.WriteLine("You start with $20 and need to get as much money as possible by running your own Lemonade Stand.");
                 UserInterface.LineBreak();
                 game = new Game();
-                game.InitGame();
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
+                gameReturnVal = game.InitGame(args[1]);
             }
+            return gameReturnVal;
         }
     }
 }

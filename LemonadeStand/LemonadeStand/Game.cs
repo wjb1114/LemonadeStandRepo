@@ -14,7 +14,7 @@ namespace LemonadeStand
         Day currentDay;
         Inventory inv;
         Store store;
-        List<TrackedData> trackedDataList;
+        public List<TrackedData> trackedDataList;
 
         public Game()
         {
@@ -39,48 +39,33 @@ namespace LemonadeStand
             EndGame();
         }
 
-        public void InitGame()
+        public int InitGame(string numDaysStr)
         {
-            bool validNumber = false;
-            bool errorThrown = false;
-            string numDaysStr = "";
             int numDays = 0;
-            do
+            
+            try
             {
-                Console.WriteLine("How many days will you run your stand? You must play a minimum of 7 days. If you are new to the game, it is recommended to start with 7 days.");
-                numDaysStr = Console.ReadLine();
-                try
-                {
-                    numDays = System.Convert.ToInt32(numDaysStr);
-                }
-                catch (FormatException)
-                {
-
-                    Console.WriteLine("Please enter a valid whole number.");
-                    errorThrown = true;
-                }
-                catch (OverflowException)
-                {
-                    Console.WriteLine("Please enter a smaller whole number.");
-                    errorThrown = true;
-                }
-                if (numDays < 7 && errorThrown == false)
-                {
-                    Console.WriteLine("Please enter a whole number greater than or equal to 7.");
-                }
-                else if (errorThrown == true)
-                {
-                    errorThrown = false;
-                }
-                else
-                {
-                    validNumber = true;
-                }
+                numDays = System.Convert.ToInt32(numDaysStr);
             }
-            while (validNumber == false);
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: invalid length. Please ensure you are passing a number in the command line arguments.");
+                return 1;
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Error: interger overflow. Please pass a smaller whole number.");
+                return 1;
+            }
+            if (numDays < 7)
+            {
+                Console.WriteLine("Error: Please pass a runtime of 7 days or greater.");
+                return 1;
+            }
             totalDays = numDays;
 
             StartGame();
+            return 0;
         }
         
         public void StartDay()
@@ -387,6 +372,9 @@ namespace LemonadeStand
             Console.WriteLine("Total of " + totalSales + " customers bought lemonade.");
             Console.WriteLine("Total of $" + totalMoneyEarned + " earned.");
             Console.WriteLine("Total of $" + totalMoneySpent + " spent.");
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         
