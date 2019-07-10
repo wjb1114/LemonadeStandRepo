@@ -28,7 +28,7 @@ namespace LemonadeStand
 
                 Console.WriteLine("Welcome to \"Lemonade Stand\"!");
                 Console.WriteLine("You start with $20 and need to get as much money as possible by running your own Lemonade Stand.");
-                Console.WriteLine("----------");
+                UserInterface.LineBreak();
                 game = new Game();
                 game.InitGame();
                 Console.WriteLine("Press any key to continue...");

@@ -91,6 +91,7 @@ namespace LemonadeStand
         }
         public void StoreMenu(Inventory inv, TrackedData data)
         {
+            UserInterface.ChangeMode("Store");
             string userInput = "";
             string numPurchaseStr = "";
             int numPurchase = 0;
@@ -102,6 +103,7 @@ namespace LemonadeStand
                 Console.WriteLine("Cups are $" + pricePerCup + ", Ice is $" + pricePerIce + ", Lemons are $" + pricePerLemon + ", and Sugar is $" + pricePerSugar  + ".");
                 Console.WriteLine("What will you purchase? Enter \"lemons\", \"ice\", \"sugar\", or \"cups\". Enter \"exit\" to run your stand.");
                 userInput = Console.ReadLine();
+                UserInterface.ChangeMode("Store");
 
                 if (userInput.ToLower() == "exit")
                 {
@@ -118,6 +120,7 @@ namespace LemonadeStand
                         validNum = false;
                         Console.WriteLine("How much will you buy?");
                         numPurchaseStr = Console.ReadLine();
+                        UserInterface.ChangeMode("Store");
                         try
                         {
                             numPurchase = System.Convert.ToInt32(numPurchaseStr);

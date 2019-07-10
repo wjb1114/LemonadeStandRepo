@@ -85,6 +85,7 @@ namespace LemonadeStand
         
         public void StartDay()
         {
+            UserInterface.ChangeMode("New Day");
             currentDay = new Day(currentDayCount);
             store.CalculateNewPrices();
             currentDay.data.weatherToday.DisplayForecast();
@@ -99,7 +100,9 @@ namespace LemonadeStand
             // 8 hours, 60 minutes per hour
             // avg 100 customers on good day
             // approx 1 customer every 4 to 5 minutes during normal weather conditions
-            SetRecipe();
+            currentDay.SetRecipe();
+
+            UserInterface.ChangeMode("Running Stand");
 
             currentDay.data.weatherToday.DisplayWeather();
             Console.WriteLine("Press any key to begin the day.");
@@ -143,6 +146,8 @@ namespace LemonadeStand
                 if (inv.currentCups < 1)
                 {
                     Console.WriteLine("You are out of cups and close your stand for the day.");
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
                     break;
                 }
 
@@ -181,6 +186,8 @@ namespace LemonadeStand
                                 if (inv.currentIce < 1 || inv.currentIce < currentDay.icePerCup)
                                 {
                                     Console.WriteLine("You are out of ice and close your stand for the day.");
+                                    Console.WriteLine("Press any key to continue.");
+                                    Console.ReadKey();
                                     break;
                                 }
                                 pitcherRemaining--;
@@ -192,11 +199,15 @@ namespace LemonadeStand
                                     if (inv.currentLemons < 1 || inv.currentLemons < currentDay.lemonsPerPitcher)
                                     {
                                         Console.WriteLine("You are out of lemons and close your stand for the day.");
+                                        Console.WriteLine("Press any key to continue.");
+                                        Console.ReadKey();
                                         break;
                                     }
                                     if (inv.currentSugar < 1 || inv.currentSugar < currentDay.sugarPerPitcher)
                                     {
                                         Console.WriteLine("You are out of sugar and close your stand for the day.");
+                                        Console.WriteLine("Press any key to continue.");
+                                        Console.ReadKey();
                                         break;
                                     }
                                     pitcherRemaining = 16;
@@ -219,6 +230,8 @@ namespace LemonadeStand
                                 if (inv.currentIce < 1 || inv.currentIce < currentDay.icePerCup)
                                 {
                                     Console.WriteLine("You are out of ice and close your stand for the day.");
+                                    Console.WriteLine("Press any key to continue.");
+                                    Console.ReadKey();
                                     break;
                                 }
                                 pitcherRemaining--;
@@ -230,11 +243,15 @@ namespace LemonadeStand
                                     if (inv.currentLemons < 1 || inv.currentLemons < currentDay.lemonsPerPitcher)
                                     {
                                         Console.WriteLine("You are out of lemons and close your stand for the day.");
+                                        Console.WriteLine("Press any key to continue.");
+                                        Console.ReadKey();
                                         break;
                                     }
                                     if (inv.currentSugar < 1 || inv.currentSugar < currentDay.sugarPerPitcher)
                                     {
                                         Console.WriteLine("You are out of sugar and close your stand for the day.");
+                                        Console.WriteLine("Press any key to continue.");
+                                        Console.ReadKey();
                                         break;
                                     }
                                     pitcherRemaining = 16;
@@ -256,6 +273,8 @@ namespace LemonadeStand
                             if (inv.currentIce < 1 || inv.currentIce < currentDay.icePerCup)
                             {
                                 Console.WriteLine("You are out of ice and close your stand for the day.");
+                                Console.WriteLine("Press any key to continue.");
+                                Console.ReadKey();
                                 break;
                             }
                             pitcherRemaining--;
@@ -267,11 +286,15 @@ namespace LemonadeStand
                                 if (inv.currentLemons < 1 || inv.currentLemons < currentDay.lemonsPerPitcher)
                                 {
                                     Console.WriteLine("You are out of lemons and close your stand for the day.");
+                                    Console.WriteLine("Press any key to continue.");
+                                    Console.ReadKey();
                                     break;
                                 }
                                 if (inv.currentSugar < 1 || inv.currentSugar < currentDay.sugarPerPitcher)
                                 {
                                     Console.WriteLine("You are out of sugar and close your stand for the day.");
+                                    Console.WriteLine("Press any key to continue.");
+                                    Console.ReadKey();
                                     break;
                                 }
                                 pitcherRemaining = 16;
@@ -305,6 +328,8 @@ namespace LemonadeStand
                 System.Threading.Thread.Sleep(41);
             }
 
+            UserInterface.LineBreak();
+
             Console.WriteLine(currentDay.data.customerList.Count + " customers appeared today.");
             Console.WriteLine(currentDay.data.customersBought + " customers bought lemonade today.");
             Console.WriteLine("$" + currentDay.data.moneyEarned + " earned today.");
@@ -315,6 +340,7 @@ namespace LemonadeStand
 
         public void EndDay()
         {
+            UserInterface.ChangeMode("Cumulative Totals:");
             trackedDataList.Add(currentDay.data);
 
             int totalCustomers = 0;
@@ -330,21 +356,20 @@ namespace LemonadeStand
                 totalMoneyEarned += trackedDataList[i].moneyEarned;
             }
 
-            Console.WriteLine("Cumulative totals:");
-            Console.WriteLine("----------");
-
             Console.WriteLine("Total of " + totalCustomers + " customers appeared.");
             Console.WriteLine("Total of " + totalSales + " customers bought lemonade.");
             Console.WriteLine("Total of $" + totalMoneyEarned + " earned.");
             Console.WriteLine("Total of $" + totalMoneySpent + " spent.");
+
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
 
             inv.MeltIce();
         }
 
         public void EndGame()
         {
-            Console.WriteLine("End of game totals:");
-            Console.WriteLine("----------");
+            UserInterface.ChangeMode("End of Game Totals:");
             int totalCustomers = 0;
             int totalSales = 0;
             int totalMoneySpent = 0;
@@ -364,167 +389,6 @@ namespace LemonadeStand
             Console.WriteLine("Total of $" + totalMoneySpent + " spent.");
         }
 
-        public void SetRecipe()
-        {
-            string inputStr = "";
-            int inputInt = 0;
-            bool errorThrown = false;
-            bool validNumber = false;
-            do
-            {
-                Console.WriteLine("How many Lemons per pitcher?");
-                inputStr = Console.ReadLine();
-                try
-                {
-                    inputInt = System.Convert.ToInt32(inputStr);
-                }
-                catch (FormatException)
-                {
-
-                    Console.WriteLine("Please enter a valid whole number.");
-                    errorThrown = true;
-                }
-                catch (OverflowException)
-                {
-                    Console.WriteLine("Please enter a smaller whole number.");
-                    errorThrown = true;
-                }
-                if (inputInt < 1 && errorThrown == false)
-                {
-                    Console.WriteLine("Please enter a whole number greater than zero.");
-                }
-                else if (errorThrown == true)
-                {
-                    errorThrown = false;
-                }
-                else
-                {
-                    validNumber = true;
-                }
-            }
-            while (validNumber == false);
-            currentDay.lemonsPerPitcher = inputInt;
-
-            inputStr = "";
-            inputInt = 0;
-            errorThrown = false;
-            validNumber = false;
-
-
-            do
-            {
-                Console.WriteLine("How much Sugar per pitcher?");
-                inputStr = Console.ReadLine();
-                try
-                {
-                    inputInt = System.Convert.ToInt32(inputStr);
-                }
-                catch (FormatException)
-                {
-
-                    Console.WriteLine("Please enter a valid whole number.");
-                    errorThrown = true;
-                }
-                catch (OverflowException)
-                {
-                    Console.WriteLine("Please enter a smaller whole number.");
-                    errorThrown = true;
-                }
-                if (inputInt < 1 && errorThrown == false)
-                {
-                    Console.WriteLine("Please enter a whole number greater than zero.");
-                }
-                else if (errorThrown == true)
-                {
-                    errorThrown = false;
-                }
-                else
-                {
-                    validNumber = true;
-                }
-            }
-            while (validNumber == false);
-            currentDay.sugarPerPitcher = inputInt;
-
-            inputStr = "";
-            inputInt = 0;
-            errorThrown = false;
-            validNumber = false;
-
-            do
-            {
-                Console.WriteLine("How much Ice per cup?");
-                inputStr = Console.ReadLine();
-                try
-                {
-                    inputInt = System.Convert.ToInt32(inputStr);
-                }
-                catch (FormatException)
-                {
-
-                    Console.WriteLine("Please enter a valid whole number.");
-                    errorThrown = true;
-                }
-                catch (OverflowException)
-                {
-                    Console.WriteLine("Please enter a smaller whole number.");
-                    errorThrown = true;
-                }
-                if (inputInt < 1 && errorThrown == false)
-                {
-                    Console.WriteLine("Please enter a whole number greater than zero.");
-                }
-                else if (errorThrown == true)
-                {
-                    errorThrown = false;
-                }
-                else
-                {
-                    validNumber = true;
-                }
-            }
-            while (validNumber == false);
-            currentDay.icePerCup = inputInt;
-
-            inputStr = "";
-            inputInt = 0;
-            errorThrown = false;
-            validNumber = false;
-
-            do
-            {
-                Console.WriteLine("How much will you charge per cup? Enter value in cents.");
-                inputStr = Console.ReadLine();
-                try
-                {
-                    inputInt = System.Convert.ToInt32(inputStr);
-                }
-                catch (FormatException)
-                {
-
-                    Console.WriteLine("Please enter a valid whole number.");
-                    errorThrown = true;
-                }
-                catch (OverflowException)
-                {
-                    Console.WriteLine("Please enter a smaller whole number.");
-                    errorThrown = true;
-                }
-                if (inputInt < 1 && errorThrown == false)
-                {
-                    Console.WriteLine("Please enter a whole number greater than zero.");
-                }
-                else if (errorThrown == true)
-                {
-                    errorThrown = false;
-                }
-                else
-                {
-                    validNumber = true;
-                }
-            }
-            while (validNumber == false);
-            currentDay.pricePerCup = inputInt;
-        }
+        
     }
 }

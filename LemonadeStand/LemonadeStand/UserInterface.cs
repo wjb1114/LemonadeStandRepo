@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class UserInterface
+    static class UserInterface
     {
-        public UserInterface()
+        public static void ChangeMode(string modeName)
         {
+            Console.Clear();
+            Console.WriteLine(modeName);
+            LineBreak();
+        }
 
+        public static void LineBreak()
+        {
+            Console.WriteLine("\n----------\n");
         }
     }
 }

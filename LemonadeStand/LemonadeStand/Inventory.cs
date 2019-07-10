@@ -88,7 +88,9 @@ namespace LemonadeStand
             if (currentIce > 0)
             {
                 currentIce = 0;
-                Console.WriteLine("All of your remaining ice melted.");
+                UserInterface.ChangeMode("All of your remaining ice melted.");
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
             }
         }
     }
