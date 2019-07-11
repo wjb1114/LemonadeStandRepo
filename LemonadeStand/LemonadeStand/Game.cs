@@ -11,7 +11,7 @@ namespace LemonadeStand
         
         int totalDays;
         int currentDayCount;
-        int playerNum;
+        public int playerNum;
         Day currentDay;
         Inventory inv;
         Store store;
@@ -49,7 +49,7 @@ namespace LemonadeStand
                 }
                 currentDayCount++;
             }
-            while (currentDay.numDay <= totalDays);
+            while (currentDay.numDay < totalDays);
             EndGame(notBankrupt);
         }
 
