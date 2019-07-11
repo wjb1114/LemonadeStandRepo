@@ -144,7 +144,7 @@ namespace LemonadeStand
                             {
                                 Console.WriteLine("Please enter a whole number greater than zero.");
                             }
-                            else
+                            else if (errorThrown == false)
                             {
                                 validNum = true;
                             }

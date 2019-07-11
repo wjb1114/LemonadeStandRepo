@@ -20,7 +20,7 @@ namespace LemonadeStand
             PricePerCup = 0;
         }
 
-        public void SetRecipe()
+        public void SetRecipe(Inventory inv)
         {
             string inputStr;
             int inputInt = 0;
@@ -52,6 +52,10 @@ namespace LemonadeStand
                 else if (errorThrown == true)
                 {
                     errorThrown = false;
+                }
+                else if (inputInt > inv.CurrentLemons)
+                {
+                    Console.WriteLine("You don't have that much!");
                 }
                 else
                 {
@@ -93,6 +97,10 @@ namespace LemonadeStand
                 {
                     errorThrown = false;
                 }
+                else if (inputInt > inv.CurrentSugar)
+                {
+                    Console.WriteLine("You don't have that much!");
+                }
                 else
                 {
                     validNumber = true;
@@ -131,6 +139,10 @@ namespace LemonadeStand
                 else if (errorThrown == true)
                 {
                     errorThrown = false;
+                }
+                else if (inputInt > inv.CurrentIce)
+                {
+                    Console.WriteLine("You don't have that much!");
                 }
                 else
                 {

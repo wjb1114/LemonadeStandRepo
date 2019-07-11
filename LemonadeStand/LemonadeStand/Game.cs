@@ -98,7 +98,7 @@ namespace LemonadeStand
             // 8 hours, 60 minutes per hour
             // avg 100 customers on good day
             // approx 1 customer every 4 to 5 minutes during normal weather conditions
-            currentDay.SetRecipe();
+            currentDay.SetRecipe(inv);
 
             UserInterface.ChangeMode("Running Stand");
 
