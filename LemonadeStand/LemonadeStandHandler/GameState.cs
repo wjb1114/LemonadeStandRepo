@@ -52,7 +52,7 @@ namespace LemonadeStandHandler
                 Console.WriteLine("\n----------\n");
                 Console.WriteLine("How many players? Maximum of 8 and minimum of 1.");
                 numPlayersStr = Console.ReadLine();
-                Console.WriteLine("How many days? Minimum of 7.");
+                Console.WriteLine("How many days? Maximum of 365 and minimum of 7.");
                 numDaysStr = Console.ReadLine();
                 Console.Clear();
 
@@ -72,16 +72,16 @@ namespace LemonadeStandHandler
                 {
                     Console.WriteLine("Please enter a numer of players at least 1 and at most 8.");
                 }
-                if (numDays < 7 && validNum == true)
+                if ((numDays < 7 || numDays > 365) && validNum == true)
                 {
-                    Console.WriteLine("Please enter a number of days that is at least 7.");
+                    Console.WriteLine("Please enter a number of days that is at least 7 and at most 365.");
                 }
                 if (validNum == false)
                 {
                     validNum = true;
                 }
             }
-            while (numPlayers > 8 || numPlayers < 1 || numDays < 6);
+            while (numPlayers > 8 || numPlayers < 1 || numDays < 7 || numDays > 365);
         }
 
         void InitializeGames()

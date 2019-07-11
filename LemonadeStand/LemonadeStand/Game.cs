@@ -28,17 +28,18 @@ namespace LemonadeStand
 
         public void StartGame()
         {
-            bool notBankrupt;
+            bool notBankrupt = true;
             do
             {
-                StartDay();
-                notBankrupt = store.StoreMenu(inv, currentDay.Data);
-                if (notBankrupt == false)
+                StartDay(notBankrupt);
+                if (notBankrupt == true)
                 {
-                    TrackedDataList.Add(currentDay.Data);
-                    break;
+                    notBankrupt = store.StoreMenu(inv, currentDay.Data);
                 }
-                RunStand();
+                if (notBankrupt == true)
+                {
+                    RunStand();
+                }
                 EndDay();
                 UserInterface.ChangeMode("Waiting for other player(s).");
                 while (System.IO.File.Exists("c:\\temp\\player" + PlayerNum + "day" + currentDayCount + ".bin"))
@@ -80,14 +81,22 @@ namespace LemonadeStand
             StartGame();
             return 0;
         }
-        
-        public void StartDay()
+
+        public void StartDay(bool notBankrupt)
         {
-            UserInterface.ChangeMode("New Day");
             currentDay = new Day(currentDayCount);
-            store.CalculateNewPrices();
-            currentDay.Data.WeatherToday.DisplayForecast();
-            Console.WriteLine("Press any key to shop for ingredients.");
+            if (notBankrupt == true)
+            {
+                UserInterface.ChangeMode("New Day");
+                store.CalculateNewPrices();
+                currentDay.Data.WeatherToday.DisplayForecast();
+                Console.WriteLine("Press any key to shop for ingredients.");
+            }
+            else
+            {
+                UserInterface.ChangeMode("Bankrupt");
+                Console.WriteLine("You are bankrupt!");
+            }
             Console.ReadKey();
         }
 
