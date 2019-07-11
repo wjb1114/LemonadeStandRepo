@@ -42,5 +42,11 @@ namespace LemonadeStand
             }
             return gameReturnVal;
         }
+
+        public static void ClearKeyBuffer()
+        {
+            while (Console.KeyAvailable)
+                Console.ReadKey(false);
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using LemonadeStand;
 
 namespace LemonadeStandHandler
 {
@@ -40,23 +41,29 @@ namespace LemonadeStandHandler
 
             for (int i = 1; i <= numDays; i++)
             {
-                while (!System.IO.File.Exists("c:\\temp\\player1day" + i + ".bin"))
+                for (int j = 1; j <= numPlayers; j++)
                 {
-                    System.Threading.Thread.Sleep(500);
+                    while (!System.IO.File.Exists("c:\\temp\\player" + j + "day" + i + ".bin"))
+                    {
+                        System.Threading.Thread.Sleep(500);
+                    }
                 }
-                Console.WriteLine("Player 1 day " + i + " finished.");
 
-                while (!System.IO.File.Exists("c:\\temp\\player2day" + i + ".bin"))
+                for (int j = 1; j <= numPlayers; j++)
                 {
-                    System.Threading.Thread.Sleep(500);
+                    TrackedData data = DeserializedData.DeserializeDailyData(j, i);
+                    Console.WriteLine("\n----------\n");
+                    Console.WriteLine("Player " + j + " encountered " + data.customerList.Count + " customers today.");
+                    Console.WriteLine("Player " + j + " sold " + data.customersBought + " cups of lemonade today.");
+                    Console.WriteLine("Player " + j + " spent $" + data.moneySpent + " today.");
+                    Console.WriteLine("Player " + j + " earned $" + data.moneyEarned + " today.");
+                    Console.WriteLine("\n----------\n");
                 }
-                Console.WriteLine("Player 2 day " + i + " finished.");
 
-                Console.WriteLine("Day " + i + " is finished for all players.");
-                Console.ReadKey();
-
-                System.IO.File.Delete("c:\\temp\\player1day" + i + ".bin");
-                System.IO.File.Delete("c:\\temp\\player2day" + i + ".bin");
+                for (int j = 1; j <= numPlayers; j++)
+                {
+                    System.IO.File.Delete("c:\\temp\\player" + j + "day" + i + ".bin");
+                }
             }
 
             foreach (string script in processes.Keys)

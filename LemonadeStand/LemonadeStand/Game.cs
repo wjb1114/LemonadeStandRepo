@@ -41,6 +41,12 @@ namespace LemonadeStand
                 }
                 RunStand();
                 EndDay();
+                UserInterface.ChangeMode("Waiting for other player(s).");
+                while (System.IO.File.Exists("c:\\temp\\player" + playerNum + "day" + currentDayCount + ".bin"))
+                {
+                    Program.ClearKeyBuffer();
+                    System.Threading.Thread.Sleep(500);
+                }
                 currentDayCount++;
             }
             while (currentDay.numDay <= totalDays);

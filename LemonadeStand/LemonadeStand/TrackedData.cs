@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LemonadeStand
 {
     [Serializable]
-    class TrackedData
+    public class TrackedData
     {
         public int moneySpent;
         public int moneyEarned;

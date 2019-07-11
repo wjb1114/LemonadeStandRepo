@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace LemonadeStand
 {
     [Serializable]
-    class Weather
+    public class Weather
     {
         public int temperature;
         int weatherTypeSelector;

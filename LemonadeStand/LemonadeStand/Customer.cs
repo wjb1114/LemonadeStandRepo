@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LemonadeStand
 {
     [Serializable]
-    class Customer
+    public class Customer
     {
         string customerName;
 
