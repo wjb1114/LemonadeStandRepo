@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 // SOLID Principle Single Responsibility
 // This class contains member variables for prices for each ingredient
@@ -16,7 +12,7 @@ namespace LemonadeStand
         int pricePerIce;
         int pricePerSugar;
         int pricePerCup;
-        Random rand;
+        private readonly Random rand;
         public Store()
         {
             pricePerCup = 3;
@@ -92,14 +88,14 @@ namespace LemonadeStand
         public bool StoreMenu(Inventory inv, TrackedData data)
         {
             UserInterface.ChangeMode("Store");
-            string userInput = "";
-            string numPurchaseStr = "";
+            string userInput;
+            string numPurchaseStr;
             int numPurchase = 0;
-            bool validNum = false;
+            bool validNum;
 
             do
             {
-                if ((inv.currentMoney < pricePerIce && inv.currentIce < 1) || (inv.currentMoney < pricePerSugar && inv.currentSugar < 1) || (inv.currentMoney < pricePerLemon && inv.currentLemons < 1) || (inv.currentMoney < pricePerCup && inv.currentCups < 1))
+                if ((inv.CurrentMoney < pricePerIce && inv.CurrentIce < 1) || (inv.CurrentMoney < pricePerSugar && inv.CurrentSugar < 1) || (inv.CurrentMoney < pricePerLemon && inv.CurrentLemons < 1) || (inv.CurrentMoney < pricePerCup && inv.CurrentCups < 1))
                 {
                     Console.WriteLine("You do not have enough money or inventory to continue. Game over.");
                     Console.ReadKey();
@@ -107,7 +103,7 @@ namespace LemonadeStand
                 }
                 else
                 {
-                    Console.WriteLine("You have $" + inv.currentMoney + ", " + inv.currentCups + " cups, " + inv.currentIce + " ice, " + inv.currentLemons + " lemons, and " + inv.currentSugar + " sugar.");
+                    Console.WriteLine("You have $" + inv.CurrentMoney + ", " + inv.CurrentCups + " cups, " + inv.CurrentIce + " ice, " + inv.CurrentLemons + " lemons, and " + inv.CurrentSugar + " sugar.");
                     Console.WriteLine("Cups are $" + pricePerCup + ", Ice is $" + pricePerIce + ", Lemons are $" + pricePerLemon + ", and Sugar is $" + pricePerSugar + ".");
                     Console.WriteLine("What will you purchase? Enter \"lemons\", \"ice\", \"sugar\", or \"cups\". Enter \"exit\" to run your stand.");
                     userInput = Console.ReadLine();
@@ -115,7 +111,7 @@ namespace LemonadeStand
 
                     if (userInput.ToLower() == "exit")
                     {
-                        if (inv.currentLemons < 1 || inv.currentIce < 1 || inv.currentSugar < 1 || inv.currentCups < 1)
+                        if (inv.CurrentLemons < 1 || inv.CurrentIce < 1 || inv.CurrentSugar < 1 || inv.CurrentCups < 1)
                         {
                             Console.WriteLine("Please make sure you have at least one of each item in your inventory.");
                         }
@@ -131,7 +127,7 @@ namespace LemonadeStand
                             UserInterface.ChangeMode("Store");
                             try
                             {
-                                numPurchase = System.Convert.ToInt32(numPurchaseStr);
+                                numPurchase = Convert.ToInt32(numPurchaseStr);
                             }
                             catch (FormatException)
                             {
@@ -147,10 +143,6 @@ namespace LemonadeStand
                             if (numPurchase < 1 && errorThrown == false)
                             {
                                 Console.WriteLine("Please enter a whole number greater than zero.");
-                            }
-                            else if (errorThrown == true)
-                            {
-                                errorThrown = false;
                             }
                             else
                             {
@@ -182,7 +174,7 @@ namespace LemonadeStand
                     }
                 }
             }
-            while (userInput.ToLower() != "exit" || inv.currentLemons < 1 || inv.currentIce < 1 || inv.currentSugar < 1 || inv.currentCups < 1);
+            while (userInput.ToLower() != "exit" || inv.CurrentLemons < 1 || inv.CurrentIce < 1 || inv.CurrentSugar < 1 || inv.CurrentCups < 1);
             return true;
         }
 

@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
     [Serializable]
-    static class SeededData
+    public static class SeededData
     {
-        static string[] firstNames = new string[10] { "William", "Chris", "Michael", "Evan", "James", "Emily", "Amy", "Angela", "Nancy", "Chloe" };
-        static string[] lastNames = new string[10] {"Stephens", "Jacobsen", "Adams", "Glaser", "Christoffsen", "Caulfield", "Miles", "Masterson", "DeAngelo", "Hauser"};
+        static readonly string[] firstNames = new string[12] { "William", "Chris", "Michael", "Evan", "James", "Emily", "Amy", "Angela", "Nancy", "Chloe", "Alice", "Adam" };
+        static readonly string[] lastNames = new string[11] {"Stephens", "Jacobsen", "Adams", "Glaser", "Christoffsen", "Caulfield", "Miles", "Masterson", "DeAngelo", "Hauser", "Murphy"};
+        public static string key = "testKey852";
 
         public static string GenerateFullName()
         {
@@ -22,6 +19,12 @@ namespace LemonadeStand
             fullName += lastNames[rand.Next(0, lastNames.Length)];
             System.Threading.Thread.Sleep(10);
             return fullName;
+        }
+
+        public static void ClearKeyBuffer()
+        {
+            while (Console.KeyAvailable)
+                Console.ReadKey(false);
         }
     }
 }

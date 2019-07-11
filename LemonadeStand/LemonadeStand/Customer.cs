@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
     [Serializable]
     public class Customer
     {
-        string customerName;
+        private readonly string customerName;
 
         // number between 1 an 10 for each, corresponds directly with number of lemons/sugar/ice
         // ie 4 lemons, 3 sugar, 5 ice cubes = 4 sour, 3 sweet, 5 water
@@ -48,10 +44,18 @@ namespace LemonadeStand
             int totalCompatibility = 0;
             if (lemons > maxSourThreshold)
             {
+                if (feedbackStr.Length > 0)
+                {
+                    feedbackStr += ", ";
+                }
                 feedbackStr += "Too sour";
             }
             else if (lemons < minSourThreshold)
             {
+                if (feedbackStr.Length > 0)
+                {
+                    feedbackStr += ", ";
+                }
                 feedbackStr += "Not sour enough";
             }
             else
@@ -61,10 +65,18 @@ namespace LemonadeStand
 
             if (sugar > maxSweetThreshold)
             {
+                if (feedbackStr.Length > 0)
+                {
+                    feedbackStr += ", ";
+                }
                 feedbackStr += "Too sweet";
             }
             else if (sugar < minSweetThreshold)
             {
+                if (feedbackStr.Length > 0)
+                {
+                    feedbackStr += ", ";
+                }
                 feedbackStr += "Not sweet enough";
             }
             else
@@ -74,10 +86,18 @@ namespace LemonadeStand
 
             if (ice > maxWaterThreshold)
             {
+                if (feedbackStr.Length > 0)
+                {
+                    feedbackStr += ", ";
+                }
                 feedbackStr += "Too much ice";
             }
             else if (ice < minWaterThreshold)
             {
+                if (feedbackStr.Length > 0)
+                {
+                    feedbackStr += ", ";
+                }
                 feedbackStr += "Not enough ice";
             }
             else

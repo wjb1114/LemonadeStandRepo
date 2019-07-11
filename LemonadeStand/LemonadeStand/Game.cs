@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
@@ -11,20 +8,22 @@ namespace LemonadeStand
         
         int totalDays;
         int currentDayCount;
-        public int playerNum;
         Day currentDay;
-        Inventory inv;
-        Store store;
-        public List<TrackedData> trackedDataList;
+        private readonly Inventory inv;
+        private readonly Store store;
+
+        public int PlayerNum { get; }
+
+        public List<TrackedData> TrackedDataList { get; }
 
         public Game(int playerNumber)
         {
             inv = new Inventory(2000, 0, 0, 0, 0);
             store = new Store();
-            trackedDataList = new List<TrackedData>();
+            TrackedDataList = new List<TrackedData>();
             totalDays = 0;
             currentDayCount = 1;
-            playerNum = playerNumber;
+            PlayerNum = playerNumber;
         }
 
         public void StartGame()
@@ -33,23 +32,23 @@ namespace LemonadeStand
             do
             {
                 StartDay();
-                notBankrupt = store.StoreMenu(inv, currentDay.data);
+                notBankrupt = store.StoreMenu(inv, currentDay.Data);
                 if (notBankrupt == false)
                 {
-                    trackedDataList.Add(currentDay.data);
+                    TrackedDataList.Add(currentDay.Data);
                     break;
                 }
                 RunStand();
                 EndDay();
                 UserInterface.ChangeMode("Waiting for other player(s).");
-                while (System.IO.File.Exists("c:\\temp\\player" + playerNum + "day" + currentDayCount + ".bin"))
+                while (System.IO.File.Exists("c:\\temp\\player" + PlayerNum + "day" + currentDayCount + ".bin"))
                 {
-                    Program.ClearKeyBuffer();
+                    SeededData.ClearKeyBuffer();
                     System.Threading.Thread.Sleep(500);
                 }
                 currentDayCount++;
             }
-            while (currentDay.numDay < totalDays);
+            while (currentDay.NumDay < totalDays);
             EndGame(notBankrupt);
         }
 
@@ -59,7 +58,7 @@ namespace LemonadeStand
             
             try
             {
-                numDays = System.Convert.ToInt32(numDaysStr);
+                numDays = Convert.ToInt32(numDaysStr);
             }
             catch (FormatException)
             {
@@ -87,7 +86,7 @@ namespace LemonadeStand
             UserInterface.ChangeMode("New Day");
             currentDay = new Day(currentDayCount);
             store.CalculateNewPrices();
-            currentDay.data.weatherToday.DisplayForecast();
+            currentDay.Data.WeatherToday.DisplayForecast();
             Console.WriteLine("Press any key to shop for ingredients.");
             Console.ReadKey();
         }
@@ -103,27 +102,27 @@ namespace LemonadeStand
 
             UserInterface.ChangeMode("Running Stand");
 
-            currentDay.data.weatherToday.DisplayWeather();
+            currentDay.Data.WeatherToday.DisplayWeather();
             Console.WriteLine("Press any key to begin the day.");
             Console.ReadKey();
 
-            if(currentDay.data.weatherToday.weatherType == "sunny")
+            if(currentDay.Data.WeatherToday.WeatherType == "sunny")
             {
                 inversePercent = 74;
             }
-            else if (currentDay.data.weatherToday.weatherType == "partly cloudy")
+            else if (currentDay.Data.WeatherToday.WeatherType == "partly cloudy")
             {
                 inversePercent = 78;
             }
-            else if (currentDay.data.weatherToday.weatherType == "overcast")
+            else if (currentDay.Data.WeatherToday.WeatherType == "overcast")
             {
                 inversePercent = 81;
             }
-            else if (currentDay.data.weatherToday.weatherType == "foggy")
+            else if (currentDay.Data.WeatherToday.WeatherType == "foggy")
             {
                 inversePercent = 85;
             }
-            else if (currentDay.data.weatherToday.weatherType == "rainy")
+            else if (currentDay.Data.WeatherToday.WeatherType == "rainy")
             {
                 inversePercent = 89;
             }
@@ -136,13 +135,13 @@ namespace LemonadeStand
             Customer cust;
 
             int pitcherRemaining = 16;
-            inv.currentLemons -= currentDay.lemonsPerPitcher;
-            inv.currentSugar -= currentDay.sugarPerPitcher;
+            inv.UseLemons(currentDay.LemonsPerPitcher);
+            inv.UseSugar(currentDay.SugarPerPitcher);
             
 
             for (int i = 0; i < 480; i++)
             {
-                if (inv.currentCups < 1)
+                if (inv.CurrentCups < 1)
                 {
                     Console.WriteLine("You are out of cups and close your stand for the day.");
                     Console.WriteLine("Press any key to continue.");
@@ -152,7 +151,7 @@ namespace LemonadeStand
 
                 if (rand.Next(1, 101) > inversePercent)
                 {
-                    int qualityCount = 0;
+                    int qualityCount;
                     int minSour = rand.Next(1, 11);
                     int maxSour = rand.Next(minSour, 11);
                     int minSweet = rand.Next(1, 11);
@@ -162,11 +161,11 @@ namespace LemonadeStand
                     int maxPrice = rand.Next(25, 101);
                     cust = new Customer(maxSour, minSour, maxSweet, minSweet, maxWater, minWater, maxPrice);
 
-                    cust.AdjustPreferencesForWeather(currentDay.data.weatherToday.temperature);
+                    cust.AdjustPreferencesForWeather(currentDay.Data.WeatherToday.Temperature);
 
-                    qualityCount = cust.CheckDrinkCompatibility(currentDay.lemonsPerPitcher, currentDay.sugarPerPitcher, currentDay.icePerCup);
+                    qualityCount = cust.CheckDrinkCompatibility(currentDay.LemonsPerPitcher, currentDay.SugarPerPitcher, currentDay.IcePerCup);
 
-                    if (currentDay.pricePerCup <= cust.maxPriceThreshold)
+                    if (currentDay.PricePerCup <= cust.maxPriceThreshold)
                     {
                         if (qualityCount < 0)
                         {
@@ -182,7 +181,7 @@ namespace LemonadeStand
                             if(rand.Next(1, 5) > 3)
                             {
                                 Console.WriteLine(cust.GetCustomerName() + " purchased. " + cust.feedbackStr);
-                                if (inv.currentIce < 1 || inv.currentIce < currentDay.icePerCup)
+                                if (inv.CurrentIce < 1 || inv.CurrentIce < currentDay.IcePerCup)
                                 {
                                     Console.WriteLine("You are out of ice and close your stand for the day.");
                                     Console.WriteLine("Press any key to continue.");
@@ -190,19 +189,19 @@ namespace LemonadeStand
                                     break;
                                 }
                                 pitcherRemaining--;
-                                inv.currentMoney += currentDay.pricePerCup;
-                                inv.currentCups--;
-                                inv.currentIce -= currentDay.icePerCup;
+                                inv.AddMoney(currentDay.PricePerCup);
+                                inv.UseCups(1);
+                                inv.UseIce(currentDay.IcePerCup);
                                 if (pitcherRemaining < 1)
                                 {
-                                    if (inv.currentLemons < 1 || inv.currentLemons < currentDay.lemonsPerPitcher)
+                                    if (inv.CurrentLemons < 1 || inv.CurrentLemons < currentDay.LemonsPerPitcher)
                                     {
                                         Console.WriteLine("You are out of lemons and close your stand for the day.");
                                         Console.WriteLine("Press any key to continue.");
                                         Console.ReadKey();
                                         break;
                                     }
-                                    if (inv.currentSugar < 1 || inv.currentSugar < currentDay.sugarPerPitcher)
+                                    if (inv.CurrentSugar < 1 || inv.CurrentSugar < currentDay.SugarPerPitcher)
                                     {
                                         Console.WriteLine("You are out of sugar and close your stand for the day.");
                                         Console.WriteLine("Press any key to continue.");
@@ -210,11 +209,11 @@ namespace LemonadeStand
                                         break;
                                     }
                                     pitcherRemaining = 16;
-                                    inv.currentSugar -= currentDay.sugarPerPitcher;
-                                    inv.currentLemons -= currentDay.lemonsPerPitcher;
+                                    inv.UseSugar(currentDay.SugarPerPitcher);
+                                    inv.UseLemons(currentDay.LemonsPerPitcher);
                                 }
-                                currentDay.data.CustomerPurchased();
-                                currentDay.data.EarnMoney(currentDay.pricePerCup);
+                                currentDay.Data.CustomerPurchased();
+                                currentDay.Data.EarnMoney(currentDay.PricePerCup);
                             }
                             else
                             {
@@ -226,7 +225,7 @@ namespace LemonadeStand
                             if (rand.Next(1, 5) > 1)
                             {
                                 Console.WriteLine(cust.GetCustomerName() + " purchased. " + cust.feedbackStr);
-                                if (inv.currentIce < 1 || inv.currentIce < currentDay.icePerCup)
+                                if (inv.CurrentIce < 1 || inv.CurrentIce < currentDay.IcePerCup)
                                 {
                                     Console.WriteLine("You are out of ice and close your stand for the day.");
                                     Console.WriteLine("Press any key to continue.");
@@ -234,19 +233,19 @@ namespace LemonadeStand
                                     break;
                                 }
                                 pitcherRemaining--;
-                                inv.currentMoney += currentDay.pricePerCup;
-                                inv.currentCups--;
-                                inv.currentIce -= currentDay.icePerCup;
+                                inv.AddMoney(currentDay.PricePerCup);
+                                inv.UseCups(1);
+                                inv.UseIce(currentDay.IcePerCup);
                                 if (pitcherRemaining < 1)
                                 {
-                                    if (inv.currentLemons < 1 || inv.currentLemons < currentDay.lemonsPerPitcher)
+                                    if (inv.CurrentLemons < 1 || inv.CurrentLemons < currentDay.LemonsPerPitcher)
                                     {
                                         Console.WriteLine("You are out of lemons and close your stand for the day.");
                                         Console.WriteLine("Press any key to continue.");
                                         Console.ReadKey();
                                         break;
                                     }
-                                    if (inv.currentSugar < 1 || inv.currentSugar < currentDay.sugarPerPitcher)
+                                    if (inv.CurrentSugar < 1 || inv.CurrentSugar < currentDay.SugarPerPitcher)
                                     {
                                         Console.WriteLine("You are out of sugar and close your stand for the day.");
                                         Console.WriteLine("Press any key to continue.");
@@ -254,11 +253,11 @@ namespace LemonadeStand
                                         break;
                                     }
                                     pitcherRemaining = 16;
-                                    inv.currentSugar -= currentDay.sugarPerPitcher;
-                                    inv.currentLemons -= currentDay.lemonsPerPitcher;
+                                    inv.UseSugar(currentDay.SugarPerPitcher);
+                                    inv.UseLemons(currentDay.LemonsPerPitcher);
                                 }
-                                currentDay.data.CustomerPurchased();
-                                currentDay.data.EarnMoney(currentDay.pricePerCup);
+                                currentDay.Data.CustomerPurchased();
+                                currentDay.Data.EarnMoney(currentDay.PricePerCup);
                             }
                             else
                             {
@@ -269,7 +268,7 @@ namespace LemonadeStand
                         {
                             cust.feedbackStr += "Perfect!";
                             Console.WriteLine(cust.GetCustomerName() + " purchased. " + cust.feedbackStr);
-                            if (inv.currentIce < 1 || inv.currentIce < currentDay.icePerCup)
+                            if (inv.CurrentIce < 1 || inv.CurrentIce < currentDay.IcePerCup)
                             {
                                 Console.WriteLine("You are out of ice and close your stand for the day.");
                                 Console.WriteLine("Press any key to continue.");
@@ -277,19 +276,19 @@ namespace LemonadeStand
                                 break;
                             }
                             pitcherRemaining--;
-                            inv.currentMoney += currentDay.pricePerCup;
-                            inv.currentCups--;
-                            inv.currentIce -= currentDay.icePerCup;
+                            inv.AddMoney(currentDay.PricePerCup);
+                            inv.UseCups(1);
+                            inv.UseIce(currentDay.IcePerCup);
                             if (pitcherRemaining < 1)
                             {
-                                if (inv.currentLemons < 1 || inv.currentLemons < currentDay.lemonsPerPitcher)
+                                if (inv.CurrentLemons < 1 || inv.CurrentLemons < currentDay.LemonsPerPitcher)
                                 {
                                     Console.WriteLine("You are out of lemons and close your stand for the day.");
                                     Console.WriteLine("Press any key to continue.");
                                     Console.ReadKey();
                                     break;
                                 }
-                                if (inv.currentSugar < 1 || inv.currentSugar < currentDay.sugarPerPitcher)
+                                if (inv.CurrentSugar < 1 || inv.CurrentSugar < currentDay.SugarPerPitcher)
                                 {
                                     Console.WriteLine("You are out of sugar and close your stand for the day.");
                                     Console.WriteLine("Press any key to continue.");
@@ -297,11 +296,11 @@ namespace LemonadeStand
                                     break;
                                 }
                                 pitcherRemaining = 16;
-                                inv.currentSugar -= currentDay.sugarPerPitcher;
-                                inv.currentLemons -= currentDay.lemonsPerPitcher;
+                                inv.UseSugar(currentDay.SugarPerPitcher);
+                                inv.UseLemons(currentDay.LemonsPerPitcher);
                             }
-                            currentDay.data.CustomerPurchased();
-                            currentDay.data.EarnMoney(currentDay.pricePerCup);
+                            currentDay.Data.CustomerPurchased();
+                            currentDay.Data.EarnMoney(currentDay.PricePerCup);
                         }
                         else
                         {
@@ -318,7 +317,7 @@ namespace LemonadeStand
                         cust.feedbackStr += "Too Expensive";
                         Console.WriteLine(cust.GetCustomerName() + " did not purchase. " + cust.feedbackStr);
                     }
-                    currentDay.data.AddCustomerToList(cust);
+                    currentDay.Data.AddCustomerToList(cust);
                 }
                 else
                 {
@@ -329,10 +328,10 @@ namespace LemonadeStand
 
             UserInterface.LineBreak();
 
-            Console.WriteLine(currentDay.data.customerList.Count + " customers appeared today.");
-            Console.WriteLine(currentDay.data.customersBought + " customers bought lemonade today.");
-            Console.WriteLine("$" + currentDay.data.moneyEarned + " earned today.");
-            Console.WriteLine("$" + currentDay.data.moneySpent + " spent today.");
+            Console.WriteLine(currentDay.Data.CustomerList.Count + " customers appeared today.");
+            Console.WriteLine(currentDay.Data.CustomersBought + " customers bought lemonade today.");
+            Console.WriteLine("$" + currentDay.Data.MoneyEarned + " earned today.");
+            Console.WriteLine("$" + currentDay.Data.MoneySpent + " spent today.");
             Console.WriteLine("Press any key to end the day.");
             Console.ReadKey();
         }
@@ -340,21 +339,21 @@ namespace LemonadeStand
         public void EndDay()
         {
             UserInterface.ChangeMode("Cumulative Totals:");
-            trackedDataList.Add(currentDay.data);
+            TrackedDataList.Add(currentDay.Data);
 
-            SerializedData.SerializeDataDaily(currentDay.data, playerNum, currentDay.numDay);
+            SerializedData.SerializeDataDaily(currentDay.Data, PlayerNum, currentDay.NumDay);
 
             int totalCustomers = 0;
             int totalSales = 0;
             int totalMoneySpent = 0;
             int totalMoneyEarned = 0;
 
-            for (int i = 0; i < trackedDataList.Count; i++)
+            for (int i = 0; i < TrackedDataList.Count; i++)
             {
-                totalCustomers += trackedDataList[i].customerList.Count;
-                totalSales += trackedDataList[i].customersBought;
-                totalMoneySpent += trackedDataList[i].moneySpent;
-                totalMoneyEarned += trackedDataList[i].moneyEarned;
+                totalCustomers += TrackedDataList[i].CustomerList.Count;
+                totalSales += TrackedDataList[i].CustomersBought;
+                totalMoneySpent += TrackedDataList[i].MoneySpent;
+                totalMoneyEarned += TrackedDataList[i].MoneyEarned;
             }
 
             Console.WriteLine("Total of " + totalCustomers + " customers appeared.");
@@ -376,12 +375,12 @@ namespace LemonadeStand
             int totalMoneySpent = 0;
             int totalMoneyEarned = 0;
 
-            for (int i = 0; i < trackedDataList.Count; i++)
+            for (int i = 0; i < TrackedDataList.Count; i++)
             {
-                totalCustomers += trackedDataList[i].customerList.Count;
-                totalSales += trackedDataList[i].customersBought;
-                totalMoneySpent += trackedDataList[i].moneySpent;
-                totalMoneyEarned += trackedDataList[i].moneyEarned;
+                totalCustomers += TrackedDataList[i].CustomerList.Count;
+                totalSales += TrackedDataList[i].CustomersBought;
+                totalMoneySpent += TrackedDataList[i].MoneySpent;
+                totalMoneyEarned += TrackedDataList[i].MoneyEarned;
             }
 
             Console.WriteLine("Total of " + totalCustomers + " customers appeared.");

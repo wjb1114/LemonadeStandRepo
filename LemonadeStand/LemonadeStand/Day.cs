@@ -1,32 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
     class Day
     {
-        public int numDay;
-        public TrackedData data;
-        public int lemonsPerPitcher;
-        public int sugarPerPitcher;
-        public int icePerCup;
-        public int pricePerCup;
+        public int NumDay { get; }
+        public TrackedData Data { get; }
+        public int LemonsPerPitcher { get; private set; }
+        public int SugarPerPitcher { get; private set; }
+        public int IcePerCup { get; private set; }
+        public int PricePerCup { get; private set; }
         public Day(int dayCount)
         {
-            numDay = dayCount;
-            data = new TrackedData();
-            lemonsPerPitcher = 0;
-            sugarPerPitcher = 0;
-            icePerCup = 0;
-            pricePerCup = 0;
+            NumDay = dayCount;
+            Data = new TrackedData();
+            LemonsPerPitcher = 0;
+            SugarPerPitcher = 0;
+            IcePerCup = 0;
+            PricePerCup = 0;
         }
 
         public void SetRecipe()
         {
-            string inputStr = "";
+            string inputStr;
             int inputInt = 0;
             bool errorThrown = false;
             bool validNumber = false;
@@ -36,7 +32,7 @@ namespace LemonadeStand
                 inputStr = Console.ReadLine();
                 try
                 {
-                    inputInt = System.Convert.ToInt32(inputStr);
+                    inputInt = Convert.ToInt32(inputStr);
                 }
                 catch (FormatException)
                 {
@@ -63,9 +59,8 @@ namespace LemonadeStand
                 }
             }
             while (validNumber == false);
-            lemonsPerPitcher = inputInt;
+            LemonsPerPitcher = inputInt;
 
-            inputStr = "";
             inputInt = 0;
             errorThrown = false;
             validNumber = false;
@@ -77,7 +72,7 @@ namespace LemonadeStand
                 inputStr = Console.ReadLine();
                 try
                 {
-                    inputInt = System.Convert.ToInt32(inputStr);
+                    inputInt = Convert.ToInt32(inputStr);
                 }
                 catch (FormatException)
                 {
@@ -104,9 +99,8 @@ namespace LemonadeStand
                 }
             }
             while (validNumber == false);
-            sugarPerPitcher = inputInt;
+            SugarPerPitcher = inputInt;
 
-            inputStr = "";
             inputInt = 0;
             errorThrown = false;
             validNumber = false;
@@ -117,7 +111,7 @@ namespace LemonadeStand
                 inputStr = Console.ReadLine();
                 try
                 {
-                    inputInt = System.Convert.ToInt32(inputStr);
+                    inputInt = Convert.ToInt32(inputStr);
                 }
                 catch (FormatException)
                 {
@@ -144,9 +138,8 @@ namespace LemonadeStand
                 }
             }
             while (validNumber == false);
-            icePerCup = inputInt;
+            IcePerCup = inputInt;
 
-            inputStr = "";
             inputInt = 0;
             errorThrown = false;
             validNumber = false;
@@ -157,7 +150,7 @@ namespace LemonadeStand
                 inputStr = Console.ReadLine();
                 try
                 {
-                    inputInt = System.Convert.ToInt32(inputStr);
+                    inputInt = Convert.ToInt32(inputStr);
                 }
                 catch (FormatException)
                 {
@@ -184,7 +177,7 @@ namespace LemonadeStand
                 }
             }
             while (validNumber == false);
-            pricePerCup = inputInt;
+            PricePerCup = inputInt;
         }
     }
 }

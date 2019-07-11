@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 // SOLID Principle Open/Closed
 // This class contains basic information for the weather.
@@ -14,36 +10,38 @@ namespace LemonadeStand
     [Serializable]
     public class Weather
     {
-        public int temperature;
-        int weatherTypeSelector;
-        public string weatherType;
+        readonly int weatherTypeSelector;
+
+        public int Temperature { get; }
+
+        public string WeatherType { get; }
 
         public Weather()
         {
             Random rand = new Random();
             weatherTypeSelector = rand.Next(1, 11);
-            temperature = rand.Next(65, 96);
+            Temperature = rand.Next(65, 96);
             switch(weatherTypeSelector)
             {
                 case 1:
                 case 2:
                 case 3:
                 case 4:
-                    weatherType = "sunny";
+                    WeatherType = "sunny";
                     break;
                 case 5:
                 case 6:
-                    weatherType = "partly cloudy";
+                    WeatherType = "partly cloudy";
                     break;
                 case 7:
                 case 8:
-                    weatherType = "overcast";
+                    WeatherType = "overcast";
                     break;
                 case 9:
-                    weatherType = "foggy";
+                    WeatherType = "foggy";
                     break;
                 case 10:
-                    weatherType = "rainy";
+                    WeatherType = "rainy";
                     break;
             }
 
@@ -52,7 +50,7 @@ namespace LemonadeStand
         public void DisplayForecast()
         {
             Random rand = new Random();
-            int forecastTemp = temperature + rand.Next(-10, 11);
+            int forecastTemp = Temperature + rand.Next(-10, 11);
             int forecastSelector = weatherTypeSelector + rand.Next(-2, 3);
             if ((forecastSelector + 1) == weatherTypeSelector || (forecastSelector - 1) == weatherTypeSelector)
             {
@@ -98,7 +96,7 @@ namespace LemonadeStand
 
         public void DisplayWeather()
         {
-            Console.WriteLine("It is currently " + temperature + " degrees and " + weatherType + ".");
+            Console.WriteLine("It is currently " + Temperature + " degrees and " + WeatherType + ".");
         }
     }
 }

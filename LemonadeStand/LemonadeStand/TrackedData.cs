@@ -1,46 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
     [Serializable]
     public class TrackedData
     {
-        public int moneySpent;
-        public int moneyEarned;
-        public int customersBought;
-        public List<Customer> customerList;
-        public Weather weatherToday;
+        public int MoneySpent { get; private set; }
+        public int MoneyEarned { get; private set; }
+        public int CustomersBought { get; private set; }
+        public List<Customer> CustomerList { get; }
+        public Weather WeatherToday { get; }
         public TrackedData()
         {
-            moneyEarned = 0;
-            moneySpent = 0;
-            customersBought = 0;
-            customerList = new List<Customer>();
-            weatherToday = new Weather();
+            MoneyEarned = 0;
+            MoneySpent = 0;
+            CustomersBought = 0;
+            CustomerList = new List<Customer>();
+            WeatherToday = new Weather();
         }
 
         public void SpendMoney(int money)
         {
-            moneySpent += money;
+            MoneySpent += money;
         }
 
         public void EarnMoney(int money)
         {
-            moneyEarned += money;
+            MoneyEarned += money;
         }
 
         public void CustomerPurchased()
         {
-            customersBought += 1;
+            CustomersBought += 1;
         }
 
         public void AddCustomerToList(Customer cust)
         {
-            customerList.Add(cust);
+            CustomerList.Add(cust);
         }
     }
 }

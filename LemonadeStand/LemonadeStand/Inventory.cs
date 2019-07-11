@@ -1,35 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Inventory
+    internal class Inventory
     {
-        public int currentMoney;
-        public int currentLemons;
-        public int currentSugar;
-        public int currentCups;
-        public int currentIce;
+        public int CurrentMoney { get; private set; }
+
+        public int CurrentLemons { get; private set; }
+
+        public int CurrentSugar { get; private set; }
+
+        public int CurrentCups { get; private set; }
+
+        public int CurrentIce { get; private set; }
 
         public Inventory(int money, int lemons, int sugar, int cups, int ice)
         {
-            currentMoney = money;
-            currentLemons = lemons;
-            currentSugar = sugar;
-            currentCups = cups;
-            currentIce = ice;
+            CurrentMoney = money;
+            CurrentLemons = lemons;
+            CurrentSugar = sugar;
+            CurrentCups = cups;
+            CurrentIce = ice;
         }
 
         public void BuyIce(int pricePer, int numBought, TrackedData data)
         {
-            if ((pricePer * numBought) <= currentMoney)
+            if ((pricePer * numBought) <= CurrentMoney)
             {
-                currentIce += numBought;
-                currentMoney -= (pricePer * numBought);
-                data.moneySpent += (pricePer * numBought);
+                CurrentIce += numBought;
+                CurrentMoney -= (pricePer * numBought);
+                data.SpendMoney (pricePer * numBought);
                 Console.WriteLine("Bought " +  numBought + " Ice for $" + (pricePer * numBought) + ".");
             }
             else
@@ -40,11 +40,11 @@ namespace LemonadeStand
 
         public void BuyLemons(int pricePer, int numBought, TrackedData data)
         {
-            if ((pricePer * numBought) <= currentMoney)
+            if ((pricePer * numBought) <= CurrentMoney)
             {
-                currentLemons += numBought;
-                currentMoney -= (pricePer * numBought);
-                data.moneySpent += (pricePer * numBought);
+                CurrentLemons += numBought;
+                CurrentMoney -= (pricePer * numBought);
+                data.SpendMoney (pricePer * numBought);
                 Console.WriteLine("Bought " + numBought + " Lemons for $" + (pricePer * numBought) + ".");
             }
             else
@@ -55,11 +55,11 @@ namespace LemonadeStand
 
         public void BuyCups(int pricePer, int numBought, TrackedData data)
         {
-            if ((pricePer * numBought) <= currentMoney)
+            if ((pricePer * numBought) <= CurrentMoney)
             {
-                currentCups += numBought;
-                currentMoney -= (pricePer * numBought);
-                data.moneySpent += (pricePer * numBought);
+                CurrentCups += numBought;
+                CurrentMoney -= (pricePer * numBought);
+                data.SpendMoney (pricePer * numBought);
                 Console.WriteLine("Bought " + numBought + " Cups for $" + (pricePer * numBought) + ".");
             }
             else
@@ -70,11 +70,11 @@ namespace LemonadeStand
 
         public void BuySugar(int pricePer, int numBought, TrackedData data)
         {
-            if ((pricePer * numBought) <= currentMoney)
+            if ((pricePer * numBought) <= CurrentMoney)
             {
-                currentSugar += numBought;
-                currentMoney -= (pricePer * numBought);
-                data.moneySpent += (pricePer * numBought);
+                CurrentSugar += numBought;
+                CurrentMoney -= (pricePer * numBought);
+                data.SpendMoney (pricePer * numBought);
                 Console.WriteLine("Bought " + numBought + " Sugar for $" + (pricePer * numBought) + ".");
             }
             else
@@ -85,13 +85,38 @@ namespace LemonadeStand
 
         public void MeltIce()
         {
-            if (currentIce > 0)
+            if (CurrentIce > 0)
             {
-                currentIce = 0;
+                CurrentIce = 0;
                 UserInterface.ChangeMode("All of your remaining ice melted.");
                 Console.WriteLine("Press any key to continue.");
                 Console.ReadKey();
             }
+        }
+
+        public void UseLemons(int numUsed)
+        {
+            CurrentLemons -= numUsed;
+        }
+
+        public void UseIce(int numUsed)
+        {
+            CurrentIce -= numUsed;
+        }
+
+        public void UseCups(int numUsed)
+        {
+            CurrentCups -= numUsed;
+        }
+
+        public void UseSugar(int numUsed)
+        {
+            CurrentSugar -= numUsed;
+        }
+
+        public void AddMoney(int numAdded)
+        {
+            CurrentMoney += numAdded;
         }
     }
 }
