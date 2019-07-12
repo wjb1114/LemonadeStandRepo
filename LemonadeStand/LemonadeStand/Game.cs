@@ -40,6 +40,19 @@ namespace LemonadeStand
                 {
                     RunStand();
                 }
+                else
+                {
+                    int bankruptDay = currentDay.NumDay;
+                    for (int i = bankruptDay; i <= totalDays; i++)
+                    {
+                        SerializedData.SerializeDataDaily(currentDay.Data, PlayerNum, i);
+                        if (i < totalDays)
+                        {
+                            currentDay = new Day(i + 1);
+                        }
+                    }
+                    break;
+                }
                 EndDay();
                 UserInterface.ChangeMode("Waiting for other player(s).");
                 while (System.IO.File.Exists("c:\\temp\\player" + PlayerNum + "day" + currentDayCount + ".bin"))
